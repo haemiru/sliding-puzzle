@@ -1,0 +1,23 @@
+{
+  "title": "바이브 코딩으로 1인 사업가 되기",
+  "subtitle": "코딩 몰라도 괜찮아요, AI가 함께 합니다",
+  "author": "[작성자명]",
+  "version": "1.0.0",
+  "targetPages": "120-200",
+  "font": {
+    "korean": "Nanum Myeongjo",
+    "size": "12pt",
+    "lineHeight": "1.8"
+  },
+  "colors": {
+    "primary": "#2C5F8D",
+    "secondary": "#FF9933",
+    "background": "#F8F9FA",
+    "text": "#2B2B2B",
+    "accent": "#E74C3C"
+  },
+  "gemini": {
+    "apiKey": "***REMOVED***",
+    "model": "gemini-exp-1206"
+  }
+}

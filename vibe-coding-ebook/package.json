@@ -1,0 +1,18 @@
+{
+  "name": "vibe-coding-ebook",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "바이브 코딩으로 1인 사업가 되기 전자책",
+  "scripts": {
+    "generate-images": "node scripts/generate-images.js",
+    "generate-images:chapter": "node scripts/generate-images.js --chapter",
+    "generate-images:force": "node scripts/generate-images.js --force",
+    "build": "node scripts/build-pdf.js",
+    "dev": "npm run generate-images && npm run build"
+  },
+  "dependencies": {
+    "@google/genai": "^1.0.0",
+    "markdown-it": "^14.0.0",
+    "puppeteer": "^21.0.0"
+  }
+}

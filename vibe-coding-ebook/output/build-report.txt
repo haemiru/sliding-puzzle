@@ -1,0 +1,50 @@
+========================================
+바이브 코딩 전자책 — 빌드 리포트
+========================================
+빌드 시각: 2026. 2. 16. 오후 5:29:28
+
+[전체 통계]
+  원고 파일:     27개
+  전체 페이지:   약 191페이지
+  총 글자 수:    68,305자
+  이미지 참조:   73개
+  예상 독서 시간: 약 171분
+  빌드 시간:     204.1초
+
+[출력 파일]
+  전체 PDF:     output/vibe-coding-ebook.pdf (77.41MB)
+  미리보기 PDF: output/vibe-coding-ebook-preview.pdf (8.80MB)
+  HTML:         output/vibe-coding-ebook.html
+
+[파일별 상세]
+  파일                                                 글자수    이미지
+  --------------------------------------------- -------- ------
+  00-front-matter/cover.md                           161      1
+  00-front-matter/author.md                          324      1
+  00-front-matter/prologue.md                       1350      1
+  part1-intro/chapter01.md                          2996      4
+  part1-intro/chapter02.md                          2689      4
+  part1-intro/chapter03.md                          2769      4
+  part1-intro/part1-practice.md                     2254      1
+  part2-start/chapter04.md                          2679      4
+  part2-start/chapter05.md                          2379      4
+  part2-start/chapter06.md                          2572      4
+  part2-start/part2-practice.md                     2183      1
+  part3-projects/chapter07.md                       2495      5
+  part3-projects/chapter08.md                       2811      4
+  part3-projects/chapter09.md                       2704      4
+  part3-projects/chapter10.md                       3349      4
+  part3-projects/part3-practice.md                  2544      1
+  part4-monetize/chapter11.md                       3211      4
+  part4-monetize/chapter12.md                       3418      4
+  part4-monetize/chapter13.md                       3632      4
+  part4-monetize/chapter14.md                       2546      1
+  part4-monetize/part4-practice.md                  2325      1
+  part5-sustain/chapter15.md                        3074      3
+  part5-sustain/chapter16.md                        3070      3
+  part5-sustain/chapter17.md                        3728      3
+  part5-sustain/part5-practice.md                   3031      1
+  99-back-matter/epilogue.md                        1138      1
+  99-back-matter/appendix.md                        2873      1
+
+========================================

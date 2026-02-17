@@ -1,0 +1,22 @@
+{
+  "output": "build/final-ebook.pdf",
+  "format": "A4",
+  "margins": {
+    "top": "2cm",
+    "right": "1.5cm",
+    "bottom": "2cm",
+    "left": "1.5cm"
+  },
+  "header": {
+    "height": "1cm",
+    "content": ""
+  },
+  "footer": {
+    "height": "1cm",
+    "content": "<span style='font-size: 10pt;'>{{page}}</span>"
+  },
+  "css": "styles/markdown-styles.css",
+  "displayHeaderFooter": true,
+  "printBackground": true,
+  "preferCSSPageSize": true
+}

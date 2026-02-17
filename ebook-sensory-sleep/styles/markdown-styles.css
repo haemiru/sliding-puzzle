@@ -1,0 +1,253 @@
+/* =============================================
+   후각·호흡 수면 훈련 전자책 — 스타일시트
+   ============================================= */
+
+/* 컬러 팔레트 */
+:root {
+  --primary-lavender: #9B89B3;
+  --secondary-mint: #A8E6CF;
+  --secondary-peach: #FFD3B6;
+  --accent-coral: #FF8B94;
+  --text-dark: #2C3E50;
+  --bg-light: #FAFAFA;
+}
+
+/* 페이지 기본 설정 */
+@page {
+  size: A4;
+  margin: 2cm 1.5cm;
+}
+
+@page :first {
+  margin-top: 0;
+}
+
+/* 페이지 번호 */
+@page {
+  @bottom-center {
+    content: counter(page);
+    font-size: 10pt;
+    color: var(--text-dark);
+  }
+}
+
+/* 본문 */
+body {
+  font-size: 11pt;
+  line-height: 1.5;
+  color: var(--text-dark);
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: var(--bg-light);
+}
+
+/* =============================================
+   제목 스타일
+   ============================================= */
+
+/* Part 제목 */
+h1 {
+  font-size: 24pt;
+  color: var(--primary-lavender);
+  font-weight: bold;
+  margin-top: 3cm;
+  page-break-before: always;
+}
+
+/* Chapter 제목 */
+h2 {
+  font-size: 18pt;
+  color: var(--primary-lavender);
+  font-weight: bold;
+  margin-top: 1.5cm;
+}
+
+/* 섹션 제목 */
+h3 {
+  font-size: 14pt;
+  color: var(--text-dark);
+  font-weight: bold;
+}
+
+/* 소제목 */
+h4 {
+  font-size: 12pt;
+  color: var(--primary-lavender);
+  font-weight: bold;
+}
+
+/* =============================================
+   본문 요소
+   ============================================= */
+
+p {
+  margin: 0.5em 0;
+  text-align: justify;
+  word-break: keep-all;
+}
+
+/* 강조 */
+strong {
+  color: var(--text-dark);
+}
+
+em {
+  font-style: italic;
+  color: #555;
+}
+
+/* 링크 */
+a {
+  color: var(--primary-lavender);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* =============================================
+   박스 스타일
+   ============================================= */
+
+blockquote {
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+  font-size: 10.5pt;
+}
+
+/* 실습 박스 (💡) */
+blockquote:has(strong:first-child:contains("💡")) {
+  background-color: #FFF9E6;
+  border-left: 4px solid #FFD700;
+}
+
+/* 주의사항 박스 (⚠️) */
+blockquote:has(strong:first-child:contains("⚠️")) {
+  background-color: #FFE6E6;
+  border-left: 4px solid var(--accent-coral);
+}
+
+/* 전문가 팁 박스 (📌) */
+blockquote:has(strong:first-child:contains("📌")) {
+  background-color: #E6F7F0;
+  border-left: 4px solid var(--secondary-mint);
+}
+
+/* Fallback: 일반 blockquote 스타일 */
+blockquote {
+  background-color: #F5F0FA;
+  border-left: 4px solid var(--primary-lavender);
+}
+
+/* =============================================
+   테이블
+   ============================================= */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 10pt;
+}
+
+th {
+  background-color: var(--primary-lavender);
+  color: white;
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: bold;
+}
+
+td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #E0E0E0;
+}
+
+tr:nth-child(even) {
+  background-color: #F8F8F8;
+}
+
+/* =============================================
+   이미지
+   ============================================= */
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 20px auto;
+  border-radius: 4px;
+}
+
+/* 이미지 캡션 */
+img + em,
+img + p > em:only-child {
+  display: block;
+  text-align: center;
+  font-size: 9pt;
+  color: #888;
+  margin-top: -10px;
+  margin-bottom: 20px;
+}
+
+/* =============================================
+   리스트
+   ============================================= */
+
+ul, ol {
+  padding-left: 1.5em;
+  margin: 0.5em 0;
+}
+
+li {
+  margin: 0.3em 0;
+}
+
+/* 체크리스트 */
+li input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+/* =============================================
+   구분선
+   ============================================= */
+
+hr {
+  border: none;
+  border-top: 1px solid #E0E0E0;
+  margin: 30px 0;
+}
+
+/* =============================================
+   핵심 포인트 스타일
+   ============================================= */
+
+hr + p > strong:first-child:contains("✅") {
+  display: block;
+  color: var(--primary-lavender);
+  font-size: 12pt;
+  margin-bottom: 8px;
+}
+
+/* =============================================
+   인쇄 설정
+   ============================================= */
+
+@media print {
+  body {
+    background-color: white;
+  }
+
+  h1, h2, h3 {
+    page-break-after: avoid;
+  }
+
+  blockquote, table, img {
+    page-break-inside: avoid;
+  }
+
+  a {
+    color: var(--text-dark);
+  }
+}
