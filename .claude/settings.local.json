@@ -7,7 +7,11 @@
       "Bash(npx vite build:*)",
       "Bash(npx vite:*)",
       "WebSearch",
-      "WebFetch(domain:ai.google.dev)"
+      "WebFetch(domain:ai.google.dev)",
+      "Bash(cd \"C:/Users/bsuha/Claude-APP/Sliding-Puzzle\" && npm run build 2>&1)",
+      "Bash(gh auth:*)",
+      "Bash(gh repo:*)",
+      "Bash(cd:*)"
     ]
   }
 }

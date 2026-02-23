@@ -41,7 +41,7 @@ const PuzzleGrid = memo(function PuzzleGrid({
           gridTemplateRows: `repeat(${gridSize}, 1fr)`,
         }}
         role="grid"
-        aria-label={`${gridSize}×${gridSize} 슬라이딩 퍼즐`}
+        aria-label={`${gridSize}×${gridSize} sliding puzzle`}
       >
         {sortedByPosition.map((tile) => {
           const isEmpty = tile.id === 0
@@ -53,7 +53,7 @@ const PuzzleGrid = memo(function PuzzleGrid({
                 key="empty"
                 className="rounded-lg bg-gray-200/60 border-2 border-dashed border-gray-300"
                 role="gridcell"
-                aria-label="빈 공간"
+                aria-label="Empty space"
               />
             )
           }
@@ -64,7 +64,7 @@ const PuzzleGrid = memo(function PuzzleGrid({
               onClick={() => isMovable && onTileClick(tile.currentPosition)}
               disabled={!isMovable}
               role="gridcell"
-              aria-label={`타일 ${tile.id}${isMovable ? ', 이동 가능' : ''}`}
+              aria-label={`Tile ${tile.id}${isMovable ? ', movable' : ''}`}
               className={`flex items-center justify-center rounded-lg text-lg md:text-2xl font-bold select-none border-2 transition-all duration-300 overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-1 ${
                 isComplete
                   ? hasImage

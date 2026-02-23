@@ -71,14 +71,14 @@ export default function App() {
   const [isComplete, setIsComplete] = useState(false)
   const [showModal, setShowModal] = useState(false)
 
-  // 이미지 상태
+  // Image state
   const [puzzleImage, setPuzzleImage] = useState(null)
   const [isLoadingImage, setIsLoadingImage] = useState(false)
   const [imageError, setImageError] = useState(null)
 
   const timerRef = useRef(null)
 
-  // 타이머
+  // Timer
   useEffect(() => {
     if (isRunning) {
       timerRef.current = setInterval(() => setTime((t) => t + 1), 1000)
@@ -88,7 +88,7 @@ export default function App() {
     return () => clearInterval(timerRef.current)
   }, [isRunning])
 
-  // 완료 감지
+  // Completion detection
   useEffect(() => {
     if (moves > 0 && checkComplete(tiles)) {
       setIsRunning(false)
@@ -132,7 +132,7 @@ export default function App() {
     (size) => {
       if (size === gridSize) return
       if (isRunning) {
-        const ok = confirm('진행 중인 게임이 초기화됩니다. 계속하시겠습니까?')
+        const ok = confirm('Your current game will be reset. Continue?')
         if (!ok) return
       }
       setGridSize(size)
@@ -198,7 +198,7 @@ export default function App() {
   const emptyPos = tiles.find((t) => t.id === 0)?.currentPosition ?? -1
   const movablePositions = getAdjacentPositions(emptyPos, gridSize)
 
-  // 첫 이미지 자동 생성
+  // Auto-generate first image
   const hasInitRef = useRef(false)
   useEffect(() => {
     if (!hasInitRef.current) {
@@ -215,29 +215,29 @@ export default function App() {
         </h1>
 
         <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-6 md:p-8 relative">
-          {/* 우상단 원본 이미지 미리보기 */}
+          {/* Original image preview (top-right) */}
           {puzzleImage && !isLoadingImage && !imageError && (
             <div className="absolute top-3 right-3 sm:top-4 sm:right-4">
               <img
                 src={puzzleImage}
-                alt="원본 이미지"
+                alt="Original image"
                 className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-lg object-cover shadow-md border-2 border-white ring-1 ring-gray-200"
               />
             </div>
           )}
 
-          {/* 난이도 선택 */}
+          {/* Difficulty selection */}
           <div
             className="flex justify-center gap-2 sm:gap-3 mb-4 sm:mb-6"
             role="group"
-            aria-label="난이도 선택"
+            aria-label="Difficulty selection"
           >
             {DIFFICULTIES.map((d) => (
               <button
                 key={d.size}
                 onClick={() => handleDifficultyChange(d.size)}
                 disabled={isLoadingImage}
-                aria-label={`난이도 ${d.label}`}
+                aria-label={`Difficulty ${d.label}`}
                 aria-pressed={gridSize === d.size}
                 className={`px-4 sm:px-5 py-2 rounded-lg font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 ${
                   isLoadingImage
@@ -254,32 +254,32 @@ export default function App() {
 
           <GameStats moves={moves} time={time} />
 
-          {/* 로딩 / 에러 / 퍼즐 */}
+          {/* Loading / Error / Puzzle */}
           {isLoadingImage ? (
             <div className="flex flex-col items-center justify-center my-6 w-full max-w-[min(400px,85vw)] aspect-square mx-auto bg-gray-50 rounded-xl">
               <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4" />
               <p className="text-gray-500 font-medium">
-                강아지 이미지 생성 중...
+                Generating puppy image...
               </p>
-              <p className="text-gray-400 text-sm mt-1">잠시만 기다려 주세요</p>
+              <p className="text-gray-400 text-sm mt-1">Please wait a moment</p>
             </div>
           ) : imageError ? (
             <div className="flex flex-col items-center justify-center my-6 w-full max-w-[min(400px,85vw)] aspect-square mx-auto bg-red-50 rounded-xl p-4">
               <p className="text-red-500 font-medium mb-2">
-                이미지 생성에 실패했습니다
+                Failed to generate image
               </p>
               <p className="text-red-400 text-sm mb-4 text-center leading-relaxed">
                 {imageError.includes('Failed to fetch') ||
                 imageError.includes('NetworkError')
-                  ? '네트워크 연결을 확인해 주세요.'
+                  ? 'Please check your network connection.'
                   : imageError}
               </p>
               <button
                 onClick={() => fetchAndStartNewGame(gridSize)}
-                aria-label="이미지 생성 다시 시도"
+                aria-label="Retry image generation"
                 className="px-5 py-2 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
               >
-                다시 시도
+                Try Again
               </button>
             </div>
           ) : (
@@ -301,7 +301,7 @@ export default function App() {
         </div>
       </div>
 
-      {/* 완료 모달 */}
+      {/* Win modal */}
       {showModal && (
         <WinModal
           moves={moves}

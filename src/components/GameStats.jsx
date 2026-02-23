@@ -8,11 +8,11 @@ const GameStats = memo(function GameStats({ moves, time }) {
   return (
     <div className="flex justify-center gap-8" aria-live="polite">
       <div className="text-center">
-        <p className="text-sm text-gray-500 font-medium">이동 횟수</p>
+        <p className="text-sm text-gray-500 font-medium">Moves</p>
         <p className="text-2xl font-bold text-gray-800">{moves}</p>
       </div>
       <div className="text-center">
-        <p className="text-sm text-gray-500 font-medium">시간</p>
+        <p className="text-sm text-gray-500 font-medium">Time</p>
         <p className="text-2xl font-bold text-gray-800 tabular-nums">{formatted}</p>
       </div>
     </div>
