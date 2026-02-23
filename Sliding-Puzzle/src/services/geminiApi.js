@@ -56,7 +56,7 @@ export async function generateDogImage(retryCount = 0) {
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}))
       throw new Error(
-        errorData.error?.message || `API 요청 실패 (${response.status})`
+        errorData.error?.message || `API request failed (${response.status})`
       )
     }
 
@@ -64,13 +64,13 @@ export async function generateDogImage(retryCount = 0) {
     const parts = data.candidates?.[0]?.content?.parts
 
     if (!parts) {
-      throw new Error('API 응답에 콘텐츠가 없습니다.')
+      throw new Error('No content in API response.')
     }
 
     const imagePart = parts.find((p) => p.inlineData)
 
     if (!imagePart) {
-      throw new Error('API 응답에 이미지가 없습니다.')
+      throw new Error('No image in API response.')
     }
 
     const { mimeType, data: base64Data } = imagePart.inlineData
