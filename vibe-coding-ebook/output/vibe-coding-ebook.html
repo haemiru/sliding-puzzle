@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>바이브 코딩으로 1인 사업가 되기</title>
-  <meta name="author" content="[작성자명]">
+  <meta name="author" content="J.M">
   <meta name="description" content="코딩 몰라도 괜찮아요, AI가 함께 합니다">
   <style>/* ============================================================
  * ebook.css
@@ -256,7 +256,7 @@ img {
   max-width: 100%;
   height: auto;
   display: block;
-  margin: 1.5em auto;
+  margin: 0 auto;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -266,8 +266,7 @@ h1 + hr + p > img,
 h1 + p > img {
   width: 100%;
   border-radius: 12px;
-  margin-top: 1em;
-  margin-bottom: 1.5em;
+  margin: 0;
 }
 
 /* 이미지 캡션: 이미지 바로 뒤 em 태그를 캡션으로 사용 */
@@ -360,7 +359,6 @@ figcaption {
  * 11. 목차 (Table of Contents)
  * ============================================================ */
 .toc {
-  page-break-after: always;
   padding: 20px 0;
 }
 
@@ -370,60 +368,52 @@ figcaption {
   border-left: none;
   padding-left: 0;
   color: #2C5F8D;
-  margin-bottom: 1.5em;
+  margin-bottom: 1.2em;
 }
 
-.toc ul {
-  list-style: none;
-  padding-left: 0;
+.toc-list {
+  max-width: 480px;
+  margin: 0 auto;
 }
 
-.toc > ul > li {
-  margin-bottom: 0.3em;
+/* 파트/챕터 제목 (h1) */
+.toc-h1 {
+  margin-top: 1.2em;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #FF9933;
 }
 
-/* 파트 제목 */
-.toc > ul > li > a {
+.toc-h1:first-child {
+  margin-top: 0;
+}
+
+.toc-h1 a {
   font-family: 'Nanum Gothic', sans-serif;
   font-weight: 700;
   font-size: 13pt;
   color: #2C5F8D;
   text-decoration: none;
   display: block;
-  padding: 8px 0 4px 0;
-  margin-top: 1em;
-  border-bottom: 1px solid #E0E0E0;
-}
-
-/* 챕터 제목 */
-.toc > ul > li > ul {
-  padding-left: 1.5em;
-}
-
-.toc > ul > li > ul > li {
-  margin-bottom: 0.2em;
-}
-
-.toc > ul > li > ul > li > a {
-  font-size: 11pt;
-  color: #2B2B2B;
-  text-decoration: none;
-  display: flex;
-  justify-content: space-between;
   padding: 4px 0;
 }
 
-.toc > ul > li > ul > li > a:hover {
-  color: #2C5F8D;
+/* 섹션 제목 (h2) */
+.toc-h2 {
+  padding-left: 1.2em;
+  border-bottom: 1px dotted #D0D0D0;
 }
 
-/* 목차 페이지 번호 (점선 리더) */
-.toc > ul > li > ul > li > a::after {
-  content: attr(data-page);
-  color: #888888;
-  font-size: 10pt;
-  flex-shrink: 0;
-  margin-left: 8px;
+.toc-h2 a {
+  font-family: 'Nanum Myeongjo', serif;
+  font-size: 11pt;
+  color: #2B2B2B;
+  text-decoration: none;
+  display: block;
+  padding: 5px 0;
+}
+
+.toc-h2 a:hover {
+  color: #2C5F8D;
 }
 
 /* ============================================================
@@ -432,33 +422,17 @@ figcaption {
 .cover-page {
   page-break-after: always;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
   min-height: 85vh;
-  padding: 2em;
+  padding: 0;
 }
 
-.cover-page h1 {
-  font-size: 32pt;
-  border-bottom: none;
-  color: #2C5F8D;
-  margin-bottom: 0.3em;
-  page-break-before: avoid;
-}
-
-.cover-page .subtitle {
-  font-size: 16pt;
-  color: #FF9933;
-  font-family: 'Nanum Gothic', sans-serif;
-  margin-bottom: 2em;
-}
-
-.cover-page .author {
-  font-size: 14pt;
-  color: #888888;
-  margin-top: 3em;
+.cover-page img {
+  max-height: 90vh;
+  max-width: 100%;
+  object-fit: contain;
 }
 
 /* ============================================================
@@ -606,16 +580,7 @@ figcaption {
 /* ── 인쇄 전용 ── */
 @media print {
 
-  /* 표지: 헤더/푸터 숨김 */
-  .cover-page {
-    page: cover;
-  }
-  @page cover {
-    margin-top: 0;
-    margin-bottom: 0;
-    @top-center { content: none; }
-    @bottom-center { content: none; }
-  }
+  /* 표지: 목차 뒤에 자연스럽게 이어짐 */
 
   /* 목차: 헤더 숨김 */
   .toc {
@@ -667,11 +632,11 @@ figcaption {
     display: table-header-group;
   }
 
-  /* 빈 페이지 방지 */
+  /* 챕터마다 새 페이지에서 시작 */
   .chapter {
-    page-break-before: auto;
+    page-break-before: always;
   }
-  .chapter:first-child {
+  .chapter:first-of-type {
     page-break-before: avoid;
   }
 }
@@ -681,281 +646,215 @@ figcaption {
   <!-- 목차 -->
   <div class="toc">
   <h2>목차</h2>
-  <ul>
-    <li><a href="#바이브-코딩으로-1인-사업가-되기">바이브 코딩으로 1인 사업가 되기</a>
-      <ul>
-    <li><a href="#저자-소개">저자 소개</a>
-      <ul>
-        <li><a href="#작성자명">[작성자명]</a></li>
-    <li><a href="#프롤로그-두-사람의-이야기">프롤로그: 두 사람의 이야기</a>
-      <ul>
-        <li><a href="#부모님-집에서-시작한-청년">부모님 집에서 시작한 청년</a></li>
-        <li><a href="#27번-실패한-개발자">27번 실패한 개발자</a></li>
-        <li><a href="#그들과-당신의-차이">그들과 당신의 차이</a></li>
-        <li><a href="#이-책이-도와드릴-것">이 책이 도와드릴 것</a></li>
-        <li><a href="#시작하기-전에">시작하기 전에</a></li>
-    <li><a href="#chapter-1-ai-시대-코딩의-새로운-패러다임">Chapter 1. AI 시대, 코딩의 새로운 패러다임</a>
-      <ul>
-        <li><a href="#학습-목표">학습 목표</a></li>
-        <li><a href="#1-전통적인-코딩-vs-바이브-코딩">1. 전통적인 코딩 vs 바이브 코딩</a></li>
-        <li><a href="#2-ai가-코딩을-어떻게-바꾸고-있는가">2. AI가 코딩을 어떻게 바꾸고 있는가</a></li>
-        <li><a href="#3-왜-지금이-시작하기-좋은-시기인가">3. 왜 지금이 시작하기 좋은 시기인가</a></li>
-        <li><a href="#실생활-비유-요리로-이해하는-바이브-코딩">실생활 비유: 요리로 이해하는 바이브 코딩</a></li>
-        <li><a href="#실제-사례-pieter-levels-이야기">실제 사례: Pieter Levels 이야기</a></li>
-        <li><a href="#핵심-포인트">핵심 포인트</a></li>
-        <li><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></li>
-    <li><a href="#chapter-2-바이브-코딩-vs-전통적-코딩">Chapter 2. 바이브 코딩 vs 전통적 코딩</a>
-      <ul>
-        <li><a href="#학습-목표">학습 목표</a></li>
-        <li><a href="#1-전통적-코딩의-어려움">1. 전통적 코딩의 어려움</a></li>
-        <li><a href="#2-바이브-코딩의-장점">2. 바이브 코딩의 장점</a></li>
-        <li><a href="#실생활-비유-자동차-운전-vs-자율주행">실생활 비유: 자동차 운전 vs 자율주행</a></li>
-        <li><a href="#실제-사례-marc-lou의-27번의-시도">실제 사례: Marc Lou의 27번의 시도</a></li>
-        <li><a href="#핵심-포인트">핵심 포인트</a></li>
-        <li><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></li>
-    <li><a href="#chapter-3-당신도-할-수-있는-이유">Chapter 3. 당신도 할 수 있는 이유</a>
-      <ul>
-        <li><a href="#학습-목표">학습 목표</a></li>
-        <li><a href="#1-나이는-숫자에-불과합니다">1. 나이는 숫자에 불과합니다</a></li>
-        <li><a href="#2-경험이-곧-아이디어">2. 경험이 곧 아이디어</a></li>
-        <li><a href="#3-작게-시작하는-용기">3. 작게 시작하는 용기</a></li>
-        <li><a href="#실생활-비유-씨앗-심기">실생활 비유: 씨앗 심기</a></li>
-        <li><a href="#실제-사례-늦게-시작해도-성공할-수-있습니다">실제 사례: 늦게 시작해도 성공할 수 있습니다</a></li>
-        <li><a href="#핵심-포인트">핵심 포인트</a></li>
-        <li><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></li>
-    <li><a href="#part-1-마무리-바이브-코딩-마인드셋-점검">Part 1 마무리: 바이브 코딩 마인드셋 점검</a>
-      <ul>
-        <li><a href="#part-1-핵심-요약">Part 1 핵심 요약</a></li>
-        <li><a href="#실습-과제-내가-만들고-싶은-것-3가지-적어보기">실습 과제: 내가 만들고 싶은 것 3가지 적어보기</a></li>
-        <li><a href="#자가-진단-체크리스트">자가 진단 체크리스트</a></li>
-        <li><a href="#당신도-할-수-있습니다">당신도 할 수 있습니다</a></li>
-        <li><a href="#part-2-미리보기-본격적으로-시작하기">Part 2 미리보기: 본격적으로 시작하기</a></li>
-    <li><a href="#chapter-4-ai-도구-설치하고-첫-대화-나누기">Chapter 4. AI 도구 설치하고 첫 대화 나누기</a>
-      <ul>
-        <li><a href="#학습-목표">학습 목표</a></li>
-        <li><a href="#1-claude-가입하기">1. Claude 가입하기</a></li>
-        <li><a href="#2-cursor-설치하기">2. Cursor 설치하기</a></li>
-        <li><a href="#3-ai와-첫-대화-나누기">3. AI와 첫 대화 나누기</a></li>
-        <li><a href="#실생활-비유-새-스마트폰-처음-켜기">실생활 비유: 새 스마트폰 처음 켜기</a></li>
-        <li><a href="#실제-사례-처음-ai를-써본-사람들의-반응">실제 사례: 처음 AI를 써본 사람들의 반응</a></li>
-        <li><a href="#핵심-포인트">핵심 포인트</a></li>
-        <li><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></li>
-    <li><a href="#chapter-5-10분-만에-첫-웹페이지-만들기">Chapter 5. 10분 만에 첫 웹페이지 만들기</a>
-      <ul>
-        <li><a href="#학습-목표">학습 목표</a></li>
-        <li><a href="#1-ai에게-웹페이지-요청하기">1. AI에게 웹페이지 요청하기</a></li>
-        <li><a href="#2-수정-요청하기">2. 수정 요청하기</a></li>
-        <li><a href="#3-더-멋진-웹페이지-만들기">3. 더 멋진 웹페이지 만들기</a></li>
-        <li><a href="#실생활-비유-레고-블록으로-집-만들기">실생활 비유: 레고 블록으로 집 만들기</a></li>
-        <li><a href="#실제-사례-바이브-코딩-10분-챌린지">실제 사례: 바이브 코딩 10분 챌린지</a></li>
-        <li><a href="#핵심-포인트">핵심 포인트</a></li>
-        <li><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></li>
-    <li><a href="#chapter-06-내-웹페이지를-세상에-공개하기">Chapter 06. 내 웹페이지를 세상에 공개하기</a>
-      <ul>
-        <li><a href="#학습-목표">학습 목표</a></li>
-        <li><a href="#1-배포란-무엇인가요">1. 배포란 무엇인가요?</a></li>
-        <li><a href="#2-netlify로-배포하기">2. Netlify로 배포하기</a></li>
-        <li><a href="#3-도메인-이야기">3. 도메인 이야기</a></li>
-        <li><a href="#실생활-비유-가게-문-열기">실생활 비유: 가게 문 열기</a></li>
-        <li><a href="#실제-사례-pieter-levels의-첫-배포-이야기">실제 사례: Pieter Levels의 첫 배포 이야기</a></li>
-        <li><a href="#핵심-포인트">핵심 포인트</a></li>
-        <li><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></li>
-    <li><a href="#part-2-마무리-첫-웹사이트-만들기-프로젝트">Part 2 마무리: 첫 웹사이트 만들기 프로젝트</a>
-      <ul>
-        <li><a href="#part-2-핵심-요약">Part 2 핵심 요약</a></li>
-        <li><a href="#실습-과제-나만의-자기소개-웹페이지를-만들고-배포하기">실습 과제: 나만의 자기소개 웹페이지를 만들고 배포하기</a></li>
-        <li><a href="#자가-진단-체크리스트">자가 진단 체크리스트</a></li>
-        <li><a href="#당신도-할-수-있습니다">당신도 할 수 있습니다</a></li>
-        <li><a href="#part-3-미리보기-본격-프로젝트-시작하기">Part 3 미리보기: 본격 프로젝트 시작하기</a></li>
-    <li><a href="#chapter-07-실전-프로젝트-기획하기">Chapter 07. 실전 프로젝트 기획하기</a>
-      <ul>
-        <li><a href="#학습-목표">학습 목표</a></li>
-        <li><a href="#1-아이디어는-불편함에서-시작합니다">1. 아이디어는 불편함에서 시작합니다</a></li>
-        <li><a href="#2-mvp-핵심-기능만-담은-첫-버전">2. MVP: 핵심 기능만 담은 첫 버전</a></li>
-        <li><a href="#실생활-비유-식당-메뉴판">실생활 비유: 식당 메뉴판</a></li>
-        <li><a href="#실제-사례-marc-lou의-shipfast">실제 사례: Marc Lou의 ShipFast</a></li>
-        <li><a href="#3-내-프로젝트-기획하기">3. 내 프로젝트 기획하기</a></li>
-        <li><a href="#핵심-포인트">핵심 포인트</a></li>
-        <li><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></li>
-    <li><a href="#chapter-08-기능-하나씩-추가하기">Chapter 08. 기능 하나씩 추가하기</a>
-      <ul>
-        <li><a href="#학습-목표">학습 목표</a></li>
-        <li><a href="#1-좋은-프롬프트-작성법">1. 좋은 프롬프트 작성법</a></li>
-        <li><a href="#2-기능-추가-순서">2. 기능 추가 순서</a></li>
-        <li><a href="#3-에러-해결하기">3. 에러 해결하기</a></li>
-        <li><a href="#실생활-비유-집-인테리어">실생활 비유: 집 인테리어</a></li>
-        <li><a href="#실제-사례-nomadlist-기능-추가-히스토리">실제 사례: NomadList 기능 추가 히스토리</a></li>
-        <li><a href="#핵심-포인트">핵심 포인트</a></li>
-        <li><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></li>
-    <li><a href="#chapter-09-디자인-다듬기">Chapter 09. 디자인 다듬기</a>
-      <ul>
-        <li><a href="#학습-목표">학습 목표</a></li>
-        <li><a href="#1-색상과-폰트-바꾸기">1. 색상과 폰트 바꾸기</a></li>
-        <li><a href="#2-레이아웃-개선하기">2. 레이아웃 개선하기</a></li>
-        <li><a href="#3-모바일-대응-반응형-디자인">3. 모바일 대응 (반응형 디자인)</a></li>
-        <li><a href="#실생활-비유-옷-입히기">실생활 비유: 옷 입히기</a></li>
-        <li><a href="#실제-사례-심플한-디자인으로-성공한-서비스들">실제 사례: 심플한 디자인으로 성공한 서비스들</a></li>
-        <li><a href="#핵심-포인트">핵심 포인트</a></li>
-        <li><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></li>
-    <li><a href="#chapter-10-사용자-피드백-받고-개선하기">Chapter 10. 사용자 피드백 받고 개선하기</a>
-      <ul>
-        <li><a href="#학습-목표">학습 목표</a></li>
-        <li><a href="#1-주변-5명에게-보여주기">1. 주변 5명에게 보여주기</a></li>
-        <li><a href="#2-피드백-정리하기-중요나중에무시">2. 피드백 정리하기: 중요/나중에/무시</a></li>
-        <li><a href="#3-우선순위-정해서-개선하기">3. 우선순위 정해서 개선하기</a></li>
-        <li><a href="#실생활-비유-시식-코너">실생활 비유: 시식 코너</a></li>
-        <li><a href="#실제-사례-pieter-levels의-트위터-피드백-전략">실제 사례: Pieter Levels의 트위터 피드백 전략</a></li>
-        <li><a href="#핵심-포인트">핵심 포인트</a></li>
-        <li><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></li>
-    <li><a href="#part-3-마무리-나만의-앱-아이디어-구체화">Part 3 마무리: 나만의 앱 아이디어 구체화</a>
-      <ul>
-        <li><a href="#part-3-핵심-요약">Part 3 핵심 요약</a></li>
-        <li><a href="#실습-과제-내-프로젝트-기획서-1장-작성하기">실습 과제: 내 프로젝트 기획서 1장 작성하기</a></li>
-        <li><a href="#자가-진단-체크리스트">자가 진단 체크리스트</a></li>
-        <li><a href="#당신도-할-수-있습니다">당신도 할 수 있습니다</a></li>
-        <li><a href="#part-4-미리보기-수익화-시작하기">Part 4 미리보기: 수익화 시작하기</a></li>
-    <li><a href="#chapter-11-수익화-전략-세우기">Chapter 11. 수익화 전략 세우기</a>
-      <ul>
-        <li><a href="#학습-목표">학습 목표</a></li>
-        <li><a href="#1-수익-모델의-종류">1. 수익 모델의 종류</a></li>
-        <li><a href="#2-내-프로젝트에-맞는-모델-찾기">2. 내 프로젝트에 맞는 모델 찾기</a></li>
-        <li><a href="#3-가격-정하기">3. 가격 정하기</a></li>
-        <li><a href="#실생활-비유-과일-가게">실생활 비유: 과일 가게</a></li>
-        <li><a href="#실제-사례-pieter-levels의-수익-모델">실제 사례: Pieter Levels의 수익 모델</a></li>
-        <li><a href="#핵심-포인트">핵심 포인트</a></li>
-        <li><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></li>
-    <li><a href="#chapter-12-첫-수익-만들기">Chapter 12. 첫 수익 만들기</a>
-      <ul>
-        <li><a href="#학습-목표">학습 목표</a></li>
-        <li><a href="#1-결제-시스템-연동하기">1. 결제 시스템 연동하기</a></li>
-        <li><a href="#2-첫-고객-찾기">2. 첫 고객 찾기</a></li>
-        <li><a href="#3-가격-테스트하기">3. 가격 테스트하기</a></li>
-        <li><a href="#실생활-비유-시장에서-첫-손님-맞이하기">실생활 비유: 시장에서 첫 손님 맞이하기</a></li>
-        <li><a href="#실제-사례-marc-lou의-첫-100달러">실제 사례: Marc Lou의 첫 100달러</a></li>
-        <li><a href="#핵심-포인트">핵심 포인트</a></li>
-        <li><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></li>
-    <li><a href="#chapter-13-마케팅의-기초">Chapter 13. 마케팅의 기초</a>
-      <ul>
-        <li><a href="#학습-목표">학습 목표</a></li>
-        <li><a href="#1-sns-활용하기">1. SNS 활용하기</a></li>
-        <li><a href="#2-콘텐츠-마케팅">2. 콘텐츠 마케팅</a></li>
-        <li><a href="#3-커뮤니티-참여하기">3. 커뮤니티 참여하기</a></li>
-        <li><a href="#실생활-비유-동네-입소문">실생활 비유: 동네 입소문</a></li>
-        <li><a href="#실제-사례-marc-lou의-트위터-마케팅">실제 사례: Marc Lou의 트위터 마케팅</a></li>
-        <li><a href="#핵심-포인트">핵심 포인트</a></li>
-        <li><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></li>
-    <li><a href="#chapter-14-수익-확장하기">Chapter 14. 수익 확장하기</a>
-      <ul>
-        <li><a href="#학습-목표">학습 목표</a></li>
-        <li><a href="#1-두-번째-제품-만들기">1. 두 번째 제품 만들기</a></li>
-        <li><a href="#2-기존-제품-업그레이드">2. 기존 제품 업그레이드</a></li>
-        <li><a href="#실생활-비유-과수원-키우기">실생활 비유: 과수원 키우기</a></li>
-        <li><a href="#실제-사례-pieter-levels의-다중-프로젝트-전략">실제 사례: Pieter Levels의 다중 프로젝트 전략</a></li>
-        <li><a href="#핵심-포인트">핵심 포인트</a></li>
-        <li><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></li>
-    <li><a href="#part-4-마무리-수익화-계획-세우기">Part 4 마무리: 수익화 계획 세우기</a>
-      <ul>
-        <li><a href="#part-4-핵심-요약">Part 4 핵심 요약</a></li>
-        <li><a href="#실습-과제-내-프로젝트의-수익-모델-캔버스-작성하기">실습 과제: 내 프로젝트의 수익 모델 캔버스 작성하기</a></li>
-        <li><a href="#자가-진단-체크리스트">자가 진단 체크리스트</a></li>
-        <li><a href="#당신도-할-수-있습니다">당신도 할 수 있습니다</a></li>
-        <li><a href="#part-5-미리보기-지속-가능한-성장">Part 5 미리보기: 지속 가능한 성장</a></li>
-    <li><a href="#chapter-15-자동화로-시간-벌기">Chapter 15. 자동화로 시간 벌기</a>
-      <ul>
-        <li><a href="#학습-목표">학습 목표</a></li>
-        <li><a href="#1-반복-작업-자동화하기">1. 반복 작업 자동화하기</a></li>
-        <li><a href="#2-ai-챗봇으로-고객-응대하기">2. AI 챗봇으로 고객 응대하기</a></li>
-        <li><a href="#3-모니터링-자동-설정">3. 모니터링 자동 설정</a></li>
-        <li><a href="#실생활-비유-세탁기와-식기세척기">실생활 비유: 세탁기와 식기세척기</a></li>
-        <li><a href="#실제-사례-1인-운영자의-하루">실제 사례: 1인 운영자의 하루</a></li>
-        <li><a href="#핵심-포인트">핵심 포인트</a></li>
-        <li><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></li>
-    <li><a href="#chapter-16-나만의-커뮤니티-만들기">Chapter 16. 나만의 커뮤니티 만들기</a>
-      <ul>
-        <li><a href="#학습-목표">학습 목표</a></li>
-        <li><a href="#1-사용자-커뮤니티의-힘">1. 사용자 커뮤니티의 힘</a></li>
-        <li><a href="#2-커뮤니티-시작하기">2. 커뮤니티 시작하기</a></li>
-        <li><a href="#3-커뮤니티-운영-노하우">3. 커뮤니티 운영 노하우</a></li>
-        <li><a href="#실생활-비유-동네-모임">실생활 비유: 동네 모임</a></li>
-        <li><a href="#실제-사례-nomadlist-커뮤니티">실제 사례: NomadList 커뮤니티</a></li>
-        <li><a href="#핵심-포인트">핵심 포인트</a></li>
-        <li><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></li>
-    <li><a href="#chapter-17-1인-사업가의-장기-비전">Chapter 17. 1인 사업가의 장기 비전</a>
-      <ul>
-        <li><a href="#학습-목표">학습 목표</a></li>
-        <li><a href="#1-지속-가능한-사업">1. 지속 가능한 사업</a></li>
-        <li><a href="#2-건강과-균형">2. 건강과 균형</a></li>
-        <li><a href="#3-ai-기술의-미래와-기회">3. AI 기술의 미래와 기회</a></li>
-        <li><a href="#실생활-비유-마라톤">실생활 비유: 마라톤</a></li>
-        <li><a href="#실제-사례-pieter-levels-10년의-여정">실제 사례: Pieter Levels 10년의 여정</a></li>
-        <li><a href="#핵심-포인트">핵심 포인트</a></li>
-        <li><a href="#마무리">마무리</a></li>
-    <li><a href="#part-5-마무리-지속-가능한-1인-사업-로드맵">Part 5 마무리: 지속 가능한 1인 사업 로드맵</a>
-      <ul>
-        <li><a href="#part-5-핵심-요약">Part 5 핵심 요약</a></li>
-        <li><a href="#실습-과제-나의-12개월-로드맵-만들기">실습 과제: 나의 12개월 로드맵 만들기</a></li>
-        <li><a href="#자가-진단-체크리스트">자가 진단 체크리스트</a></li>
-        <li><a href="#당신도-할-수-있습니다">당신도 할 수 있습니다</a></li>
-        <li><a href="#에필로그-안내">에필로그 안내</a></li>
-    <li><a href="#에필로그-당신의-이야기는-이제-시작입니다">에필로그: 당신의 이야기는 이제 시작입니다</a>
-      <ul>
-        <li><a href="#여기까지-오신-당신에게">여기까지 오신 당신에게</a></li>
-        <li><a href="#여러분이-얻은-것들">여러분이 얻은 것들</a></li>
-        <li><a href="#한-가지-부탁">한 가지 부탁</a></li>
-        <li><a href="#완벽하지-않아도-시작하세요">완벽하지 않아도 시작하세요</a></li>
-        <li><a href="#pieter-levels가-당신에게-하고-싶은-말">Pieter Levels가 당신에게 하고 싶은 말</a></li>
-    <li><a href="#부록">부록</a>
-      <ul>
-        <li><a href="#a-유용한-도구-목록">A. 유용한 도구 목록</a></li>
-        <li><a href="#b-자주-묻는-질문-faq">B. 자주 묻는 질문 (FAQ)</a></li>
-        <li><a href="#c-용어-사전">C. 용어 사전</a></li>
-        <li><a href="#d-이-책에서-소개한-인물">D. 이 책에서 소개한 인물</a></li>
-      </ul>
-    </li>
-  </ul>
+  <div class="toc-list">
+    <div class="toc-h1"><a href="#프롤로그-두-사람의-이야기">프롤로그: 두 사람의 이야기</a></div>
+    <div class="toc-h2"><a href="#부모님-집에서-시작한-청년">부모님 집에서 시작한 청년</a></div>
+    <div class="toc-h2"><a href="#27번-실패한-개발자">27번 실패한 개발자</a></div>
+    <div class="toc-h2"><a href="#그들과-당신의-차이">그들과 당신의 차이</a></div>
+    <div class="toc-h2"><a href="#이-책이-도와드릴-것">이 책이 도와드릴 것</a></div>
+    <div class="toc-h2"><a href="#시작하기-전에">시작하기 전에</a></div>
+    <div class="toc-h1"><a href="#chapter-1-ai-시대-코딩의-새로운-패러다임">Chapter 1. AI 시대, 코딩의 새로운 패러다임</a></div>
+    <div class="toc-h2"><a href="#학습-목표">학습 목표</a></div>
+    <div class="toc-h2"><a href="#1-전통적인-코딩-vs-바이브-코딩">1. 전통적인 코딩 vs 바이브 코딩</a></div>
+    <div class="toc-h2"><a href="#2-ai가-코딩을-어떻게-바꾸고-있는가">2. AI가 코딩을 어떻게 바꾸고 있는가</a></div>
+    <div class="toc-h2"><a href="#3-왜-지금이-시작하기-좋은-시기인가">3. 왜 지금이 시작하기 좋은 시기인가</a></div>
+    <div class="toc-h2"><a href="#실생활-비유-요리로-이해하는-바이브-코딩">실생활 비유: 요리로 이해하는 바이브 코딩</a></div>
+    <div class="toc-h2"><a href="#실제-사례-pieter-levels-이야기">실제 사례: Pieter Levels 이야기</a></div>
+    <div class="toc-h2"><a href="#핵심-포인트">핵심 포인트</a></div>
+    <div class="toc-h2"><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></div>
+    <div class="toc-h1"><a href="#chapter-2-바이브-코딩-vs-전통적-코딩">Chapter 2. 바이브 코딩 vs 전통적 코딩</a></div>
+    <div class="toc-h2"><a href="#학습-목표">학습 목표</a></div>
+    <div class="toc-h2"><a href="#1-전통적-코딩의-어려움">1. 전통적 코딩의 어려움</a></div>
+    <div class="toc-h2"><a href="#2-바이브-코딩의-장점">2. 바이브 코딩의 장점</a></div>
+    <div class="toc-h2"><a href="#실생활-비유-자동차-운전-vs-자율주행">실생활 비유: 자동차 운전 vs 자율주행</a></div>
+    <div class="toc-h2"><a href="#실제-사례-marc-lou의-27번의-시도">실제 사례: Marc Lou의 27번의 시도</a></div>
+    <div class="toc-h2"><a href="#핵심-포인트">핵심 포인트</a></div>
+    <div class="toc-h2"><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></div>
+    <div class="toc-h1"><a href="#chapter-3-당신도-할-수-있는-이유">Chapter 3. 당신도 할 수 있는 이유</a></div>
+    <div class="toc-h2"><a href="#학습-목표">학습 목표</a></div>
+    <div class="toc-h2"><a href="#1-나이는-숫자에-불과합니다">1. 나이는 숫자에 불과합니다</a></div>
+    <div class="toc-h2"><a href="#2-경험이-곧-아이디어">2. 경험이 곧 아이디어</a></div>
+    <div class="toc-h2"><a href="#3-작게-시작하는-용기">3. 작게 시작하는 용기</a></div>
+    <div class="toc-h2"><a href="#실생활-비유-씨앗-심기">실생활 비유: 씨앗 심기</a></div>
+    <div class="toc-h2"><a href="#실제-사례-늦게-시작해도-성공할-수-있습니다">실제 사례: 늦게 시작해도 성공할 수 있습니다</a></div>
+    <div class="toc-h2"><a href="#핵심-포인트">핵심 포인트</a></div>
+    <div class="toc-h2"><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></div>
+    <div class="toc-h1"><a href="#part-1-마무리-바이브-코딩-마인드셋-점검">Part 1 마무리: 바이브 코딩 마인드셋 점검</a></div>
+    <div class="toc-h2"><a href="#part-1-핵심-요약">Part 1 핵심 요약</a></div>
+    <div class="toc-h2"><a href="#실습-과제-내가-만들고-싶은-것-3가지-적어보기">실습 과제: 내가 만들고 싶은 것 3가지 적어보기</a></div>
+    <div class="toc-h2"><a href="#자가-진단-체크리스트">자가 진단 체크리스트</a></div>
+    <div class="toc-h2"><a href="#당신도-할-수-있습니다">당신도 할 수 있습니다</a></div>
+    <div class="toc-h2"><a href="#part-2-미리보기-본격적으로-시작하기">Part 2 미리보기: 본격적으로 시작하기</a></div>
+    <div class="toc-h1"><a href="#chapter-4-ai-도구-설치하고-첫-대화-나누기">Chapter 4. AI 도구 설치하고 첫 대화 나누기</a></div>
+    <div class="toc-h2"><a href="#학습-목표">학습 목표</a></div>
+    <div class="toc-h2"><a href="#1-claude-가입하기">1. Claude 가입하기</a></div>
+    <div class="toc-h2"><a href="#2-cursor-설치하기">2. Cursor 설치하기</a></div>
+    <div class="toc-h2"><a href="#3-ai와-첫-대화-나누기">3. AI와 첫 대화 나누기</a></div>
+    <div class="toc-h2"><a href="#실생활-비유-새-스마트폰-처음-켜기">실생활 비유: 새 스마트폰 처음 켜기</a></div>
+    <div class="toc-h2"><a href="#실제-사례-처음-ai를-써본-사람들의-반응">실제 사례: 처음 AI를 써본 사람들의 반응</a></div>
+    <div class="toc-h2"><a href="#핵심-포인트">핵심 포인트</a></div>
+    <div class="toc-h2"><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></div>
+    <div class="toc-h1"><a href="#chapter-5-10분-만에-첫-웹페이지-만들기">Chapter 5. 10분 만에 첫 웹페이지 만들기</a></div>
+    <div class="toc-h2"><a href="#학습-목표">학습 목표</a></div>
+    <div class="toc-h2"><a href="#1-ai에게-웹페이지-요청하기">1. AI에게 웹페이지 요청하기</a></div>
+    <div class="toc-h2"><a href="#2-수정-요청하기">2. 수정 요청하기</a></div>
+    <div class="toc-h2"><a href="#3-더-멋진-웹페이지-만들기">3. 더 멋진 웹페이지 만들기</a></div>
+    <div class="toc-h2"><a href="#실생활-비유-레고-블록으로-집-만들기">실생활 비유: 레고 블록으로 집 만들기</a></div>
+    <div class="toc-h2"><a href="#실제-사례-바이브-코딩-10분-챌린지">실제 사례: 바이브 코딩 10분 챌린지</a></div>
+    <div class="toc-h2"><a href="#핵심-포인트">핵심 포인트</a></div>
+    <div class="toc-h2"><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></div>
+    <div class="toc-h1"><a href="#chapter-06-내-웹페이지를-세상에-공개하기">Chapter 06. 내 웹페이지를 세상에 공개하기</a></div>
+    <div class="toc-h2"><a href="#학습-목표">학습 목표</a></div>
+    <div class="toc-h2"><a href="#1-배포란-무엇인가요">1. 배포란 무엇인가요?</a></div>
+    <div class="toc-h2"><a href="#2-netlify로-배포하기">2. Netlify로 배포하기</a></div>
+    <div class="toc-h2"><a href="#3-도메인-이야기">3. 도메인 이야기</a></div>
+    <div class="toc-h2"><a href="#실생활-비유-가게-문-열기">실생활 비유: 가게 문 열기</a></div>
+    <div class="toc-h2"><a href="#실제-사례-pieter-levels의-첫-배포-이야기">실제 사례: Pieter Levels의 첫 배포 이야기</a></div>
+    <div class="toc-h2"><a href="#핵심-포인트">핵심 포인트</a></div>
+    <div class="toc-h2"><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></div>
+    <div class="toc-h1"><a href="#part-2-마무리-첫-웹사이트-만들기-프로젝트">Part 2 마무리: 첫 웹사이트 만들기 프로젝트</a></div>
+    <div class="toc-h2"><a href="#part-2-핵심-요약">Part 2 핵심 요약</a></div>
+    <div class="toc-h2"><a href="#실습-과제-나만의-자기소개-웹페이지를-만들고-배포하기">실습 과제: 나만의 자기소개 웹페이지를 만들고 배포하기</a></div>
+    <div class="toc-h2"><a href="#자가-진단-체크리스트">자가 진단 체크리스트</a></div>
+    <div class="toc-h2"><a href="#당신도-할-수-있습니다">당신도 할 수 있습니다</a></div>
+    <div class="toc-h2"><a href="#part-3-미리보기-본격-프로젝트-시작하기">Part 3 미리보기: 본격 프로젝트 시작하기</a></div>
+    <div class="toc-h1"><a href="#chapter-07-실전-프로젝트-기획하기">Chapter 07. 실전 프로젝트 기획하기</a></div>
+    <div class="toc-h2"><a href="#학습-목표">학습 목표</a></div>
+    <div class="toc-h2"><a href="#1-아이디어는-불편함에서-시작합니다">1. 아이디어는 불편함에서 시작합니다</a></div>
+    <div class="toc-h2"><a href="#2-mvp-핵심-기능만-담은-첫-버전">2. MVP: 핵심 기능만 담은 첫 버전</a></div>
+    <div class="toc-h2"><a href="#실생활-비유-식당-메뉴판">실생활 비유: 식당 메뉴판</a></div>
+    <div class="toc-h2"><a href="#실제-사례-marc-lou의-shipfast">실제 사례: Marc Lou의 ShipFast</a></div>
+    <div class="toc-h2"><a href="#3-내-프로젝트-기획하기">3. 내 프로젝트 기획하기</a></div>
+    <div class="toc-h2"><a href="#핵심-포인트">핵심 포인트</a></div>
+    <div class="toc-h2"><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></div>
+    <div class="toc-h1"><a href="#chapter-08-기능-하나씩-추가하기">Chapter 08. 기능 하나씩 추가하기</a></div>
+    <div class="toc-h2"><a href="#학습-목표">학습 목표</a></div>
+    <div class="toc-h2"><a href="#1-좋은-프롬프트-작성법">1. 좋은 프롬프트 작성법</a></div>
+    <div class="toc-h2"><a href="#2-기능-추가-순서">2. 기능 추가 순서</a></div>
+    <div class="toc-h2"><a href="#3-에러-해결하기">3. 에러 해결하기</a></div>
+    <div class="toc-h2"><a href="#실생활-비유-집-인테리어">실생활 비유: 집 인테리어</a></div>
+    <div class="toc-h2"><a href="#실제-사례-nomadlist-기능-추가-히스토리">실제 사례: NomadList 기능 추가 히스토리</a></div>
+    <div class="toc-h2"><a href="#핵심-포인트">핵심 포인트</a></div>
+    <div class="toc-h2"><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></div>
+    <div class="toc-h1"><a href="#chapter-09-디자인-다듬기">Chapter 09. 디자인 다듬기</a></div>
+    <div class="toc-h2"><a href="#학습-목표">학습 목표</a></div>
+    <div class="toc-h2"><a href="#1-색상과-폰트-바꾸기">1. 색상과 폰트 바꾸기</a></div>
+    <div class="toc-h2"><a href="#2-레이아웃-개선하기">2. 레이아웃 개선하기</a></div>
+    <div class="toc-h2"><a href="#3-모바일-대응-반응형-디자인">3. 모바일 대응 (반응형 디자인)</a></div>
+    <div class="toc-h2"><a href="#실생활-비유-옷-입히기">실생활 비유: 옷 입히기</a></div>
+    <div class="toc-h2"><a href="#실제-사례-심플한-디자인으로-성공한-서비스들">실제 사례: 심플한 디자인으로 성공한 서비스들</a></div>
+    <div class="toc-h2"><a href="#핵심-포인트">핵심 포인트</a></div>
+    <div class="toc-h2"><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></div>
+    <div class="toc-h1"><a href="#chapter-10-사용자-피드백-받고-개선하기">Chapter 10. 사용자 피드백 받고 개선하기</a></div>
+    <div class="toc-h2"><a href="#학습-목표">학습 목표</a></div>
+    <div class="toc-h2"><a href="#1-주변-5명에게-보여주기">1. 주변 5명에게 보여주기</a></div>
+    <div class="toc-h2"><a href="#2-피드백-정리하기-중요나중에무시">2. 피드백 정리하기: 중요/나중에/무시</a></div>
+    <div class="toc-h2"><a href="#3-우선순위-정해서-개선하기">3. 우선순위 정해서 개선하기</a></div>
+    <div class="toc-h2"><a href="#실생활-비유-시식-코너">실생활 비유: 시식 코너</a></div>
+    <div class="toc-h2"><a href="#실제-사례-pieter-levels의-트위터-피드백-전략">실제 사례: Pieter Levels의 트위터 피드백 전략</a></div>
+    <div class="toc-h2"><a href="#핵심-포인트">핵심 포인트</a></div>
+    <div class="toc-h2"><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></div>
+    <div class="toc-h1"><a href="#part-3-마무리-나만의-앱-아이디어-구체화">Part 3 마무리: 나만의 앱 아이디어 구체화</a></div>
+    <div class="toc-h2"><a href="#part-3-핵심-요약">Part 3 핵심 요약</a></div>
+    <div class="toc-h2"><a href="#실습-과제-내-프로젝트-기획서-1장-작성하기">실습 과제: 내 프로젝트 기획서 1장 작성하기</a></div>
+    <div class="toc-h2"><a href="#자가-진단-체크리스트">자가 진단 체크리스트</a></div>
+    <div class="toc-h2"><a href="#당신도-할-수-있습니다">당신도 할 수 있습니다</a></div>
+    <div class="toc-h2"><a href="#part-4-미리보기-수익화-시작하기">Part 4 미리보기: 수익화 시작하기</a></div>
+    <div class="toc-h1"><a href="#chapter-11-수익화-전략-세우기">Chapter 11. 수익화 전략 세우기</a></div>
+    <div class="toc-h2"><a href="#학습-목표">학습 목표</a></div>
+    <div class="toc-h2"><a href="#1-수익-모델의-종류">1. 수익 모델의 종류</a></div>
+    <div class="toc-h2"><a href="#2-내-프로젝트에-맞는-모델-찾기">2. 내 프로젝트에 맞는 모델 찾기</a></div>
+    <div class="toc-h2"><a href="#3-가격-정하기">3. 가격 정하기</a></div>
+    <div class="toc-h2"><a href="#실생활-비유-과일-가게">실생활 비유: 과일 가게</a></div>
+    <div class="toc-h2"><a href="#실제-사례-pieter-levels의-수익-모델">실제 사례: Pieter Levels의 수익 모델</a></div>
+    <div class="toc-h2"><a href="#핵심-포인트">핵심 포인트</a></div>
+    <div class="toc-h2"><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></div>
+    <div class="toc-h1"><a href="#chapter-12-첫-수익-만들기">Chapter 12. 첫 수익 만들기</a></div>
+    <div class="toc-h2"><a href="#학습-목표">학습 목표</a></div>
+    <div class="toc-h2"><a href="#1-결제-시스템-연동하기">1. 결제 시스템 연동하기</a></div>
+    <div class="toc-h2"><a href="#2-첫-고객-찾기">2. 첫 고객 찾기</a></div>
+    <div class="toc-h2"><a href="#3-가격-테스트하기">3. 가격 테스트하기</a></div>
+    <div class="toc-h2"><a href="#실생활-비유-시장에서-첫-손님-맞이하기">실생활 비유: 시장에서 첫 손님 맞이하기</a></div>
+    <div class="toc-h2"><a href="#실제-사례-marc-lou의-첫-100달러">실제 사례: Marc Lou의 첫 100달러</a></div>
+    <div class="toc-h2"><a href="#핵심-포인트">핵심 포인트</a></div>
+    <div class="toc-h2"><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></div>
+    <div class="toc-h1"><a href="#chapter-13-마케팅의-기초">Chapter 13. 마케팅의 기초</a></div>
+    <div class="toc-h2"><a href="#학습-목표">학습 목표</a></div>
+    <div class="toc-h2"><a href="#1-sns-활용하기">1. SNS 활용하기</a></div>
+    <div class="toc-h2"><a href="#2-콘텐츠-마케팅">2. 콘텐츠 마케팅</a></div>
+    <div class="toc-h2"><a href="#3-커뮤니티-참여하기">3. 커뮤니티 참여하기</a></div>
+    <div class="toc-h2"><a href="#실생활-비유-동네-입소문">실생활 비유: 동네 입소문</a></div>
+    <div class="toc-h2"><a href="#실제-사례-marc-lou의-트위터-마케팅">실제 사례: Marc Lou의 트위터 마케팅</a></div>
+    <div class="toc-h2"><a href="#핵심-포인트">핵심 포인트</a></div>
+    <div class="toc-h2"><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></div>
+    <div class="toc-h1"><a href="#chapter-14-수익-확장하기">Chapter 14. 수익 확장하기</a></div>
+    <div class="toc-h2"><a href="#학습-목표">학습 목표</a></div>
+    <div class="toc-h2"><a href="#1-두-번째-제품-만들기">1. 두 번째 제품 만들기</a></div>
+    <div class="toc-h2"><a href="#2-기존-제품-업그레이드">2. 기존 제품 업그레이드</a></div>
+    <div class="toc-h2"><a href="#실생활-비유-과수원-키우기">실생활 비유: 과수원 키우기</a></div>
+    <div class="toc-h2"><a href="#실제-사례-pieter-levels의-다중-프로젝트-전략">실제 사례: Pieter Levels의 다중 프로젝트 전략</a></div>
+    <div class="toc-h2"><a href="#핵심-포인트">핵심 포인트</a></div>
+    <div class="toc-h2"><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></div>
+    <div class="toc-h1"><a href="#part-4-마무리-수익화-계획-세우기">Part 4 마무리: 수익화 계획 세우기</a></div>
+    <div class="toc-h2"><a href="#part-4-핵심-요약">Part 4 핵심 요약</a></div>
+    <div class="toc-h2"><a href="#실습-과제-내-프로젝트의-수익-모델-캔버스-작성하기">실습 과제: 내 프로젝트의 수익 모델 캔버스 작성하기</a></div>
+    <div class="toc-h2"><a href="#자가-진단-체크리스트">자가 진단 체크리스트</a></div>
+    <div class="toc-h2"><a href="#당신도-할-수-있습니다">당신도 할 수 있습니다</a></div>
+    <div class="toc-h2"><a href="#part-5-미리보기-지속-가능한-성장">Part 5 미리보기: 지속 가능한 성장</a></div>
+    <div class="toc-h1"><a href="#chapter-15-자동화로-시간-벌기">Chapter 15. 자동화로 시간 벌기</a></div>
+    <div class="toc-h2"><a href="#학습-목표">학습 목표</a></div>
+    <div class="toc-h2"><a href="#1-반복-작업-자동화하기">1. 반복 작업 자동화하기</a></div>
+    <div class="toc-h2"><a href="#2-ai-챗봇으로-고객-응대하기">2. AI 챗봇으로 고객 응대하기</a></div>
+    <div class="toc-h2"><a href="#3-모니터링-자동-설정">3. 모니터링 자동 설정</a></div>
+    <div class="toc-h2"><a href="#실생활-비유-세탁기와-식기세척기">실생활 비유: 세탁기와 식기세척기</a></div>
+    <div class="toc-h2"><a href="#실제-사례-1인-운영자의-하루">실제 사례: 1인 운영자의 하루</a></div>
+    <div class="toc-h2"><a href="#핵심-포인트">핵심 포인트</a></div>
+    <div class="toc-h2"><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></div>
+    <div class="toc-h1"><a href="#chapter-16-나만의-커뮤니티-만들기">Chapter 16. 나만의 커뮤니티 만들기</a></div>
+    <div class="toc-h2"><a href="#학습-목표">학습 목표</a></div>
+    <div class="toc-h2"><a href="#1-사용자-커뮤니티의-힘">1. 사용자 커뮤니티의 힘</a></div>
+    <div class="toc-h2"><a href="#2-커뮤니티-시작하기">2. 커뮤니티 시작하기</a></div>
+    <div class="toc-h2"><a href="#3-커뮤니티-운영-노하우">3. 커뮤니티 운영 노하우</a></div>
+    <div class="toc-h2"><a href="#실생활-비유-동네-모임">실생활 비유: 동네 모임</a></div>
+    <div class="toc-h2"><a href="#실제-사례-nomadlist-커뮤니티">실제 사례: NomadList 커뮤니티</a></div>
+    <div class="toc-h2"><a href="#핵심-포인트">핵심 포인트</a></div>
+    <div class="toc-h2"><a href="#다음-챕터-미리보기">다음 챕터 미리보기</a></div>
+    <div class="toc-h1"><a href="#chapter-17-1인-사업가의-장기-비전">Chapter 17. 1인 사업가의 장기 비전</a></div>
+    <div class="toc-h2"><a href="#학습-목표">학습 목표</a></div>
+    <div class="toc-h2"><a href="#1-지속-가능한-사업">1. 지속 가능한 사업</a></div>
+    <div class="toc-h2"><a href="#2-건강과-균형">2. 건강과 균형</a></div>
+    <div class="toc-h2"><a href="#3-ai-기술의-미래와-기회">3. AI 기술의 미래와 기회</a></div>
+    <div class="toc-h2"><a href="#실생활-비유-마라톤">실생활 비유: 마라톤</a></div>
+    <div class="toc-h2"><a href="#실제-사례-pieter-levels-10년의-여정">실제 사례: Pieter Levels 10년의 여정</a></div>
+    <div class="toc-h2"><a href="#핵심-포인트">핵심 포인트</a></div>
+    <div class="toc-h2"><a href="#마무리">마무리</a></div>
+    <div class="toc-h1"><a href="#part-5-마무리-지속-가능한-1인-사업-로드맵">Part 5 마무리: 지속 가능한 1인 사업 로드맵</a></div>
+    <div class="toc-h2"><a href="#part-5-핵심-요약">Part 5 핵심 요약</a></div>
+    <div class="toc-h2"><a href="#실습-과제-나의-12개월-로드맵-만들기">실습 과제: 나의 12개월 로드맵 만들기</a></div>
+    <div class="toc-h2"><a href="#자가-진단-체크리스트">자가 진단 체크리스트</a></div>
+    <div class="toc-h2"><a href="#당신도-할-수-있습니다">당신도 할 수 있습니다</a></div>
+    <div class="toc-h2"><a href="#에필로그-안내">에필로그 안내</a></div>
+    <div class="toc-h1"><a href="#에필로그-당신의-이야기는-이제-시작입니다">에필로그: 당신의 이야기는 이제 시작입니다</a></div>
+    <div class="toc-h2"><a href="#여기까지-오신-당신에게">여기까지 오신 당신에게</a></div>
+    <div class="toc-h2"><a href="#여러분이-얻은-것들">여러분이 얻은 것들</a></div>
+    <div class="toc-h2"><a href="#한-가지-부탁">한 가지 부탁</a></div>
+    <div class="toc-h2"><a href="#완벽하지-않아도-시작하세요">완벽하지 않아도 시작하세요</a></div>
+    <div class="toc-h2"><a href="#pieter-levels가-당신에게-하고-싶은-말">Pieter Levels가 당신에게 하고 싶은 말</a></div>
+    <div class="toc-h1"><a href="#부록">부록</a></div>
+    <div class="toc-h2"><a href="#a-유용한-도구-목록">A. 유용한 도구 목록</a></div>
+    <div class="toc-h2"><a href="#b-자주-묻는-질문-faq">B. 자주 묻는 질문 (FAQ)</a></div>
+    <div class="toc-h2"><a href="#c-용어-사전">C. 용어 사전</a></div>
+    <div class="toc-h2"><a href="#d-이-책에서-소개한-인물">D. 이 책에서 소개한 인물</a></div>
+  </div>
 </div>
 
 
   <!-- 본문 -->
   
 <!-- 00-front-matter/cover.md -->
-<section class="chapter">
 <div class="cover-page">
-<h1 id="바이브-코딩으로-1인-사업가-되기">바이브 코딩으로 1인 사업가 되기</h1>
-<div class="subtitle">코딩 몰라도 괜찮아요, AI가 함께 합니다</div>
-<div class="author">[작성자명]</div>
+<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/cover.png" alt="표지 이미지" />
 </div>
-</section>
-
-<!-- 00-front-matter/author.md -->
-<section class="chapter">
-<h1 id="저자-소개">저자 소개</h1>
-<hr>
-<h2 id="작성자명">[작성자명]</h2>
-<p>“기술은 어려운 것이 아닙니다.<br>
-다만 아직 만나지 못했을 뿐입니다.”</p>
-<p>[작성자명]은 AI와 바이브 코딩을 통해<br>
-누구나 자신만의 디지털 사업을 시작할 수 있다고 믿습니다.</p>
-<h3>이런 분들을 위해 이 책을 썼습니다</h3>
-<ul>
-<li>코딩이라는 단어만 들어도 겁이 나는 분</li>
-<li>&quot;나이가 많아서 못 해&quot;라고 생각하시는 분</li>
-<li>은퇴 후 새로운 수입원을 찾고 계신 분</li>
-<li>아이디어는 있지만 만들 방법을 모르는 분</li>
-<li>자녀에게 의지하지 않고 스스로 해보고 싶은 분</li>
-</ul>
-<h3>연락처</h3>
-<ul>
-<li>이메일: [이메일 주소]</li>
-<li>블로그: [블로그 주소]</li>
-<li>유튜브: [채널 주소]</li>
-</ul>
-<hr>
-<p><em>이 책에 대한 의견이나 질문이 있으시면<br>
-언제든 연락해 주세요.<br>
-여러분의 이야기를 듣고 싶습니다.</em></p>
-
-</section>
 
 <!-- 00-front-matter/prologue.md -->
 <section class="chapter">
@@ -1057,7 +956,6 @@ Marc Lou도 27번이나 실패했습니다.</p>
 <!-- part1-intro/chapter01.md -->
 <section class="chapter">
 <h1 id="chapter-1-ai-시대-코딩의-새로운-패러다임">Chapter 1. AI 시대, 코딩의 새로운 패러다임</h1>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/chapter01.png" alt="챕터1 이미지" />
 <hr>
 <h2 id="학습-목표">학습 목표</h2>
 <p>이 챕터를 읽고 나면 이런 것들을 알게 됩니다.</p>
@@ -1175,7 +1073,6 @@ AI가 만드는 코드의 품질이 크게 좋아졌습니다.<br>
 <h2 id="실생활-비유-요리로-이해하는-바이브-코딩">실생활 비유: 요리로 이해하는 바이브 코딩</h2>
 <p>코딩이 아직 어렵게 느껴지시나요?<br>
 요리에 비유해 보겠습니다.</p>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch01-cooking.png" alt="요리에 비유한 바이브 코딩 — 밀키트처럼 쉽게 시작하기" />
 <h3>전통적인 코딩 = 재료부터 직접 만들어 요리하기</h3>
 <p>밀가루를 직접 빻고, 면을 직접 뽑고, 소스를 직접 만듭니다.<br>
 맛있는 파스타 한 접시를 만들려면 몇 시간이 걸립니다.<br>
@@ -1255,7 +1152,6 @@ AI 덕분에 예전보다 10배는 빠르게 만들 수 있다.”</p>
 <!-- part1-intro/chapter02.md -->
 <section class="chapter">
 <h1 id="chapter-2-바이브-코딩-vs-전통적-코딩">Chapter 2. 바이브 코딩 vs 전통적 코딩</h1>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/chapter02.png" alt="챕터2 이미지" />
 <hr>
 <h2 id="학습-목표">학습 목표</h2>
 <p>이 챕터를 읽고 나면 이런 것들을 알게 됩니다.</p>
@@ -1284,7 +1180,6 @@ AI 덕분에 예전보다 10배는 빠르게 만들 수 있다.”</p>
 검색해서 찾아봐야 합니다.<br>
 찾아봐도 이해가 안 됩니다.</p>
 <p><strong>이 과정에서 대부분 포기합니다.</strong></p>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch02-error.png" alt="코드 에러에 좌절하는 모습과 AI가 해결해주는 모습 비교" />
 <h3>배워야 할 것이 너무 많았습니다</h3>
 <p>웹사이트 하나를 만들려면 이것들을 알아야 했습니다.</p>
 <ul>
@@ -1365,7 +1260,6 @@ AI가 코드를 대신 작성해 줍니다.</p>
 그래서 마음 편하게 도전할 수 있습니다.</p>
 <hr>
 <h2 id="실생활-비유-자동차-운전-vs-자율주행">실생활 비유: 자동차 운전 vs 자율주행</h2>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch02-driving.png" alt="수동 운전과 자율주행의 차이로 보는 코딩 방식 비교" />
 <h3>전통적 코딩 = 수동 변속기 운전 배우기</h3>
 <p>예전에는 운전을 배우려면 많은 것을 알아야 했습니다.</p>
 <p>클러치를 밟고, 기어를 넣고, 악셀을 조절합니다.<br>
@@ -1450,7 +1344,6 @@ AI는 그 결정을 실행해 주는 도구입니다.</p>
 <!-- part1-intro/chapter03.md -->
 <section class="chapter">
 <h1 id="chapter-3-당신도-할-수-있는-이유">Chapter 3. 당신도 할 수 있는 이유</h1>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/chapter03.png" alt="챕터3 이미지" />
 <hr>
 <h2 id="학습-목표">학습 목표</h2>
 <p>이 챕터를 읽고 나면 이런 것들을 알게 됩니다.</p>
@@ -1479,7 +1372,6 @@ AI는 그 결정을 실행해 주는 도구입니다.</p>
 할랜드 샌더스는 65세에 KFC를 시작했습니다.</p>
 <p>그전에는 수십 가지 직업을 전전했습니다.<br>
 65세에 “이제 정말 해보자” 결심했습니다.</p>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch03-latestart.png" alt="늦은 나이에 시작해서 성공한 사업가들" />
 <h3>디지털 시대에는 더 쉽습니다</h3>
 <p>레이 크록과 할랜드 샌더스는 직접 가게를 열었습니다.<br>
 돈도 많이 들고, 위험도 컸습니다.</p>
@@ -1505,7 +1397,6 @@ AI는 그 결정을 실행해 주는 도구입니다.</p>
 건강 문제를 겪어 보셨나요?<br>
 취미 활동을 오래 하셨나요?</p>
 <p>이 모든 경험이 사업 아이디어입니다.</p>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch03-experience.png" alt="인생 경험이 사업 아이디어로 바뀌는 과정" />
 <h3>경험에서 아이디어 찾기</h3>
 <p>몇 가지 예를 들어 보겠습니다.</p>
 <p><strong>30년 회사원 경력이 있다면:</strong><br>
@@ -1554,7 +1445,6 @@ AI는 그 결정을 실행해 주는 도구입니다.</p>
 나머지 20%는 하면서 채우면 됩니다.</p>
 <hr>
 <h2 id="실생활-비유-씨앗-심기">실생활 비유: 씨앗 심기</h2>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch03-seed.png" alt="작은 씨앗에서 아름다운 정원으로 성장하는 과정" />
 <h3>큰 농장이 아니라 작은 화분에서</h3>
 <p>사업을 시작하는 것을 씨앗 심기에 비유해 보겠습니다.</p>
 <p>처음부터 큰 농장을 살 필요 없습니다.<br>
@@ -1631,7 +1521,6 @@ AI가 메워줍니다.</p>
 <!-- part1-intro/part1-practice.md -->
 <section class="chapter">
 <h1 id="part-1-마무리-바이브-코딩-마인드셋-점검">Part 1 마무리: 바이브 코딩 마인드셋 점검</h1>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/part1-practice.png" alt="Part 1 실습 이미지" />
 <hr>
 <h2 id="part-1-핵심-요약">Part 1 핵심 요약</h2>
 <p>세 개의 챕터를 통해 이런 것들을 배웠습니다.</p>
@@ -1793,7 +1682,6 @@ Part 2에서는 <strong>직접 손을 움직여 봅니다.</strong></p>
 <!-- part2-start/chapter04.md -->
 <section class="chapter">
 <h1 id="chapter-4-ai-도구-설치하고-첫-대화-나누기">Chapter 4. AI 도구 설치하고 첫 대화 나누기</h1>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/chapter04.png" alt="챕터4 이미지" />
 <hr>
 <h2 id="학습-목표">학습 목표</h2>
 <p>이 챕터를 읽고 나면 이런 것들을 알게 됩니다.</p>
@@ -1811,7 +1699,6 @@ Part 2에서는 <strong>직접 손을 움직여 봅니다.</strong></p>
 코드도 작성해 줍니다.</p>
 <p><strong>카카오톡으로 친구에게 부탁하는 것</strong>과 비슷합니다.<br>
 &quot;이거 만들어줘&quot;라고 하면 만들어 줍니다.</p>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch04-claude.png" alt="Claude 가입 과정을 안내하는 친절한 AI 도우미" />
 <h3>가입 방법 (5분이면 됩니다)</h3>
 <p><strong>1단계: 사이트 접속</strong></p>
 <p>인터넷 브라우저를 엽니다.<br>
@@ -1832,7 +1719,6 @@ Part 2에서는 <strong>직접 손을 움직여 봅니다.</strong></p>
 처음에는 무료 버전으로 충분합니다.</p>
 <hr>
 <h2 id="2-cursor-설치하기">2. Cursor 설치하기</h2>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch04-cursor.png" alt="Cursor 편집기의 AI 대화 인터페이스" />
 <h3>Cursor가 뭔가요?</h3>
 <p>Cursor(커서)는 코드 편집기입니다.<br>
 <strong>코드 편집기</strong>란 코드를 쓰는 프로그램입니다.<br>
@@ -1865,7 +1751,6 @@ Part 2에서는 <strong>직접 손을 움직여 봅니다.</strong></p>
 <p>틀려도 괜찮습니다.<br>
 이상한 질문을 해도 괜찮습니다.<br>
 AI는 절대 화내지 않습니다.</p>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch04-conversation.png" alt="AI와 친근하게 대화하는 모습" />
 <h3>첫 대화 해보기</h3>
 <p>Claude 화면 아래 입력창에 이렇게 써보세요.</p>
 <blockquote>
@@ -1972,7 +1857,6 @@ Claude가 상세하게 알려주니까<br>
 <!-- part2-start/chapter05.md -->
 <section class="chapter">
 <h1 id="chapter-5-10분-만에-첫-웹페이지-만들기">Chapter 5. 10분 만에 첫 웹페이지 만들기</h1>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/chapter05.png" alt="챕터5 이미지" />
 <hr>
 <h2 id="학습-목표">학습 목표</h2>
 <p>이 챕터를 읽고 나면 이런 것들을 알게 됩니다.</p>
@@ -2034,7 +1918,6 @@ Claude가 상세하게 알려주니까<br>
 </blockquote>
 <p>한 번에 하나씩 요청하는 게 좋습니다.<br>
 AI가 수정된 코드를 다시 만들어 줍니다.</p>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch05-iteration.png" alt="요청 → 결과 확인 → 수정 요청의 반복 사이클" />
 <h3>몇 번이든 수정할 수 있습니다</h3>
 <p>수정에 제한이 없습니다.<br>
 10번을 수정해도 괜찮습니다.<br>
@@ -2043,7 +1926,6 @@ AI가 수정된 코드를 다시 만들어 줍니다.</p>
 <strong>마음에 들 때까지 요청하세요.</strong></p>
 <hr>
 <h2 id="3-더-멋진-웹페이지-만들기">3. 더 멋진 웹페이지 만들기</h2>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch05-template.png" alt="모호한 프롬프트와 구체적인 프롬프트의 결과 차이" />
 <h3>좀 더 구체적인 프롬프트</h3>
 <p>기본 자기소개 페이지에 만족하셨나요?<br>
 조금 더 욕심을 내볼까요?</p>
@@ -2146,7 +2028,6 @@ HTML, CSS를 배우는 데만 2주가 걸립니다.<br>
 <!-- part2-start/chapter06.md -->
 <section class="chapter">
 <h1 id="chapter-06-내-웹페이지를-세상에-공개하기">Chapter 06. 내 웹페이지를 세상에 공개하기</h1>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/chapter06.png" alt="챕터06 이미지" />
 <hr>
 <h2 id="학습-목표">학습 목표</h2>
 <p>이 챕터를 읽고 나면 이런 것들을 알게 됩니다.</p>
@@ -2195,7 +2076,6 @@ HTML, CSS를 배우는 데만 2주가 걸립니다.<br>
 <p>화면에 “Sites” 메뉴가 보일 겁니다.<br>
 여기서 새 사이트를 올릴 수 있어요.<br>
 아래쪽에 점선 박스가 보여요.</p>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch06-netlify.png" alt="Netlify에 폴더를 드래그하여 업로드하는 과정" />
 <h3>3단계: 폴더 드래그하기</h3>
 <p>내 컴퓨터에서 웹페이지 폴더를 찾으세요.<br>
 보통 <strong>dist</strong> 폴더에 파일이 있어요.<br>
@@ -2212,7 +2092,6 @@ HTML 파일이 있는 폴더면 됩니다.<br>
 정말 간단하지 않나요?</p>
 <hr>
 <h2 id="3-도메인-이야기">3. 도메인 이야기</h2>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch06-domain.png" alt="집 주소와 도메인 주소를 비교한 그림" />
 <h3>도메인이란?</h3>
 <p>도메인은 인터넷 주소를 말해요.<br>
 <strong><a href="http://naver.com">naver.com</a></strong>이 네이버의 도메인이에요.<br>
@@ -2301,7 +2180,6 @@ Netlify에 배포까지 해보는 시간이에요.<br>
 <!-- part2-start/part2-practice.md -->
 <section class="chapter">
 <h1 id="part-2-마무리-첫-웹사이트-만들기-프로젝트">Part 2 마무리: 첫 웹사이트 만들기 프로젝트</h1>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/part2-practice.png" alt="실습 이미지" />
 <hr>
 <h2 id="part-2-핵심-요약">Part 2 핵심 요약</h2>
 <p>세 개의 챕터를 통해 이런 것들을 배웠습니다.</p>
@@ -2475,7 +2353,6 @@ Part 3에서는 <strong>진짜 나만의 프로젝트</strong>를 만들어 봅�
 <!-- part3-projects/chapter07.md -->
 <section class="chapter">
 <h1 id="chapter-07-실전-프로젝트-기획하기">Chapter 07. 실전 프로젝트 기획하기</h1>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/chapter07.png" alt="챕터07 이미지" />
 <hr>
 <h2 id="학습-목표">학습 목표</h2>
 <p>이 챕터를 읽고 나면 이런 것들을 알게 됩니다.</p>
@@ -2493,7 +2370,6 @@ Part 3에서는 <strong>진짜 나만의 프로젝트</strong>를 만들어 봅�
 <p>가장 좋은 아이디어의 출발점은요.<br>
 바로 <strong>내가 느끼는 불편함</strong>이에요.<br>
 &quot;이런 게 있으면 편할 텐데&quot;가 시작이에요.</p>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch07-discomfort.png" alt="일상의 불편함에서 아이디어를 발견하는 모습" />
 <h3>불편함을 찾는 방법</h3>
 <p>하루 동안 이런 순간을 떠올려 보세요.<br>
 “아, 이거 불편하다” 싶은 순간이요.<br>
@@ -2546,7 +2422,6 @@ Part 3에서는 <strong>진짜 나만의 프로젝트</strong>를 만들어 봅�
 <strong>나중에 추가해도 돼요.</strong></p>
 <hr>
 <h2 id="실생활-비유-식당-메뉴판">실생활 비유: 식당 메뉴판</h2>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch07-menu.png" alt="복잡한 메뉴판 vs 심플한 메뉴판 비교" />
 <p>처음 여는 식당을 상상해 보세요.<br>
 메뉴를 몇 가지로 시작할까요?<br>
 <strong>3가지면 충분합니다.</strong></p>
@@ -2593,7 +2468,6 @@ ShipFast의 첫 버전은 기능이 3개였어요.</p>
 사용자 1명이라도 먼저 만족시키세요.</p>
 <hr>
 <h2 id="3-내-프로젝트-기획하기">3. 내 프로젝트 기획하기</h2>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch07-planning.png" alt="간단한 프로젝트 기획 보드" />
 <h3>기획서 작성법</h3>
 <p>거창한 문서가 필요한 건 아니에요.<br>
 종이 한 장이면 충분합니다.<br>
@@ -2641,7 +2515,6 @@ ShipFast의 첫 버전은 기능이 3개였어요.</p>
 <!-- part3-projects/chapter08.md -->
 <section class="chapter">
 <h1 id="chapter-08-기능-하나씩-추가하기">Chapter 08. 기능 하나씩 추가하기</h1>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/chapter08.png" alt="챕터08 이미지" />
 <hr>
 <h2 id="학습-목표">학습 목표</h2>
 <p>이 챕터를 읽고 나면 이런 것들을 알게 됩니다.</p>
@@ -2659,7 +2532,6 @@ ShipFast의 첫 버전은 기능이 3개였어요.</p>
 <p>같은 부탁이라도 방법에 따라 달라요.<br>
 &quot;밥 해줘&quot;보다 &quot;김치볶음밥 해줘&quot;가 낫죠.<br>
 AI에게도 구체적으로 말해야 해요.</p>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch08-prompts.png" alt="모호한 요청 vs 명확한 요청의 결과 차이" />
 <h3>나쁜 프롬프트 vs 좋은 프롬프트</h3>
 <p>나쁜 프롬프트의 예를 볼까요?</p>
 <blockquote>
@@ -2734,7 +2606,6 @@ AI에게 이렇게 순서대로 요청하세요.</p>
 <p>이렇게 하나씩 요청하는 게 핵심이에요.</p>
 <hr>
 <h2 id="3-에러-해결하기">3. 에러 해결하기</h2>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch08-error.png" alt="에러 발견 → AI에게 전달 → 해결의 3단계" />
 <h3>에러는 당연한 거예요</h3>
 <p>코딩을 하다 보면 에러가 나요.<br>
 이건 초보만 그런 게 아니에요.<br>
@@ -2837,7 +2708,6 @@ AI가 고쳐줄 수 있거든요.</p>
 <!-- part3-projects/chapter09.md -->
 <section class="chapter">
 <h1 id="chapter-09-디자인-다듬기">Chapter 09. 디자인 다듬기</h1>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/chapter09.png" alt="챕터09 이미지" />
 <hr>
 <h2 id="학습-목표">학습 목표</h2>
 <p>이 챕터를 읽고 나면 이런 것들을 알게 됩니다.</p>
@@ -3023,7 +2893,6 @@ AI에게 한마디만 하면 돼요.</p>
 <!-- part3-projects/chapter10.md -->
 <section class="chapter">
 <h1 id="chapter-10-사용자-피드백-받고-개선하기">Chapter 10. 사용자 피드백 받고 개선하기</h1>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/chapter10.png" alt="챕터10 이미지" />
 <hr>
 <h2 id="학습-목표">학습 목표</h2>
 <p>이 챕터를 읽고 나면 이런 것들을 알게 됩니다.</p>
@@ -3040,7 +2909,6 @@ AI에게 한마디만 하면 돼요.</p>
 하지만 100% 완성을 기다리면 영원히 못 보여줍니다.</p>
 <p><strong>70%만 되어도 보여주세요.</strong><br>
 그래야 방향을 바로잡을 수 있습니다.</p>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch10-network.png" alt="피드백을 줄 5명의 네트워크" />
 <h3>누구에게 보여줄까요?</h3>
 <p>처음 피드백을 받을 5명을 골라보세요.</p>
 <ul>
@@ -3079,7 +2947,6 @@ AI에게 한마디만 하면 돼요.</p>
 어떤 것은 급하고, 어떤 것은 나중에 해도 됩니다.<br>
 어떤 것은 무시해도 됩니다.</p>
 <p><strong>세 가지 바구니</strong>에 나눠 담아보세요.</p>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch10-sort.png" alt="피드백을 중요/나중에/무시 세 바구니로 분류하기" />
 <h3>바구니 1: 중요 (지금 바로 고치기)</h3>
 <p>이런 피드백은 바로 반영하세요.</p>
 <ul>
@@ -3138,7 +3005,6 @@ AI에게 한마디만 하면 돼요.</p>
 <p>피드백을 분류했으면 이제 개선할 차례입니다.<br>
 하지만 한꺼번에 다 고치려고 하면 안 됩니다.</p>
 <p><strong>가장 중요한 것 하나부터 시작하세요.</strong></p>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch10-priority.png" alt="개선 우선순위를 정하는 매트릭스" />
 <h3>개선 순서 정하기</h3>
 <p>“중요” 바구니 안에서도 순서가 있습니다.</p>
 <ol>
@@ -3256,7 +3122,6 @@ Pieter는 듣고, 분류하고, 반영했을 뿐입니다.</p>
 <!-- part3-projects/part3-practice.md -->
 <section class="chapter">
 <h1 id="part-3-마무리-나만의-앱-아이디어-구체화">Part 3 마무리: 나만의 앱 아이디어 구체화</h1>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/part3-practice.png" alt="실습 이미지" />
 <hr>
 <h2 id="part-3-핵심-요약">Part 3 핵심 요약</h2>
 <p>네 개의 챕터를 통해 이런 것들을 배웠습니다.</p>
@@ -3451,7 +3316,6 @@ Part 4에서는 <strong>돈을 벌 수 있는 구조</strong>를 만들어 봅�
 <!-- part4-monetize/chapter11.md -->
 <section class="chapter">
 <h1 id="chapter-11-수익화-전략-세우기">Chapter 11. 수익화 전략 세우기</h1>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/chapter11.png" alt="챕터11 이미지" />
 <hr>
 <h2 id="학습-목표">학습 목표</h2>
 <p>이 챕터를 읽고 나면 이런 것들을 알게 됩니다.</p>
@@ -3549,7 +3413,6 @@ Part 4에서는 <strong>돈을 벌 수 있는 구조</strong>를 만들어 봅�
 </tbody>
 </table>
 <hr>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch11-combine.png" alt="수익 모델을 조합해 나만의 전략 만들기" />
 <h2 id="2-내-프로젝트에-맞는-모델-찾기">2. 내 프로젝트에 맞는 모델 찾기</h2>
 <h3>서비스 종류별 추천 모델</h3>
 <p>어떤 모델이 맞는지 헷갈리시죠?<br>
@@ -3577,7 +3440,6 @@ Part 4에서는 <strong>돈을 벌 수 있는 구조</strong>를 만들어 봅�
 처음에는 하나로 시작하고 나중에 추가하세요.</p>
 <hr>
 <h2 id="3-가격-정하기">3. 가격 정하기</h2>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch11-pricing.png" alt="가치와 가격의 균형을 맞추는 저울" />
 <h3>가장 어려운 질문</h3>
 <p>“얼마를 받아야 하죠?”</p>
 <p>많은 분들이 이 질문에서 막힙니다.<br>
@@ -3691,7 +3553,6 @@ Part 4에서는 <strong>돈을 벌 수 있는 구조</strong>를 만들어 봅�
 <!-- part4-monetize/chapter12.md -->
 <section class="chapter">
 <h1 id="chapter-12-첫-수익-만들기">Chapter 12. 첫 수익 만들기</h1>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/chapter12.png" alt="챕터12 이미지" />
 <hr>
 <h2 id="학습-목표">학습 목표</h2>
 <p>이 챕터를 읽고 나면 이런 것들을 알게 됩니다.</p>
@@ -3738,7 +3599,6 @@ AI와 함께하면 생각보다 간단합니다.</p>
 </blockquote>
 <p>AI가 필요한 코드를 만들어 줍니다.<br>
 복사해서 붙여넣으면 됩니다.</p>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch12-payment.png" alt="결제 버튼부터 서비스 제공까지의 결제 플로우" />
 <h3>처음에는 간단하게</h3>
 <p>처음부터 복잡한 결제 시스템을 만들 필요 없습니다.</p>
 <p><strong>1단계</strong>: 결제 버튼 하나 추가하기<br>
@@ -3748,7 +3608,6 @@ AI와 함께하면 생각보다 간단합니다.</p>
 자동화나 구독 관리는 나중에 추가하면 됩니다.</p>
 <hr>
 <h2 id="2-첫-고객-찾기">2. 첫 고객 찾기</h2>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch12-customers.png" alt="고객 획득 경로 — 인지에서 결제까지의 깔때기" />
 <h3>첫 고객 1명이 가장 중요합니다</h3>
 <p>100명의 고객보다 <strong>첫 1명</strong>이 더 중요합니다.</p>
 <p>왜냐하면 첫 고객이 증명해 주기 때문입니다.<br>
@@ -3784,7 +3643,6 @@ AI와 함께하면 생각보다 간단합니다.</p>
 대부분의 성공한 서비스가 이 방법을 씁니다.</p>
 <hr>
 <h2 id="3-가격-테스트하기">3. 가격 테스트하기</h2>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch12-pricing.png" alt="기본/표준/프리미엄 3단계 가격표" />
 <h3>가격 정하기가 가장 어렵습니다</h3>
 <p>“얼마를 받아야 하지?”</p>
 <p>이 질문에 정답은 없습니다.<br>
@@ -3934,7 +3792,6 @@ Chapter 2에서 그가 27번 실패했다는 이야기를 했습니다.</p>
 <!-- part4-monetize/chapter13.md -->
 <section class="chapter">
 <h1 id="chapter-13-마케팅의-기초">Chapter 13. 마케팅의 기초</h1>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/chapter13.png" alt="챕터13 이미지" />
 <hr>
 <h2 id="학습-목표">학습 목표</h2>
 <p>이 챕터를 읽고 나면 이런 것들을 알게 됩니다.</p>
@@ -3953,7 +3810,6 @@ Chapter 2에서 그가 27번 실패했다는 이야기를 했습니다.</p>
 <p>하지만 <strong>SNS</strong>가 있습니다.<br>
 무료입니다.<br>
 누구나 할 수 있습니다.</p>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch13-sns.png" alt="각 SNS 플랫폼의 특성 비교" />
 <h3>어떤 SNS를 쓸까요?</h3>
 <p>모든 SNS를 다 할 필요 없습니다.<br>
 <strong>하나만 잘하면 됩니다.</strong></p>
@@ -3995,7 +3851,6 @@ Chapter 2에서 그가 27번 실패했다는 이야기를 했습니다.</p>
 50개의 게시물은 <strong>든든한 자산</strong>이 됩니다.</p>
 <hr>
 <h2 id="2-콘텐츠-마케팅">2. 콘텐츠 마케팅</h2>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch13-content.png" alt="콘텐츠 제작 → 배포 → 고객 획득의 선순환" />
 <h3>도움이 되면 마케팅이 됩니다</h3>
 <p>&quot;마케팅&quot;이라고 하면 뭐가 떠오르시나요?</p>
 <p>화려한 광고?<br>
@@ -4040,7 +3895,6 @@ AI만으로는 못 쓰는 진짜 이야기가 있기 때문입니다.</p>
 이것을 <strong>SEO</strong>(검색 엔진 최적화)라고 합니다.</p>
 <hr>
 <h2 id="3-커뮤니티-참여하기">3. 커뮤니티 참여하기</h2>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch13-community.png" alt="커뮤니티 네트워크가 점점 확장되는 모습" />
 <h3>혼자 하면 외롭습니다</h3>
 <p>1인 사업은 혼자 하는 일입니다.<br>
 하지만 혼자 <strong>있을</strong> 필요는 없습니다.</p>
@@ -4173,7 +4027,6 @@ Marc Lou는 유튜브도 시작했습니다.</p>
 <!-- part4-monetize/chapter14.md -->
 <section class="chapter">
 <h1 id="chapter-14-수익-확장하기">Chapter 14. 수익 확장하기</h1>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/chapter14.png" alt="챕터14 이미지" />
 <hr>
 <h2 id="학습-목표">학습 목표</h2>
 <p>이 챕터를 읽고 나면 이런 것들을 알게 됩니다.</p>
@@ -4360,7 +4213,6 @@ AI에게 뭘 물어봐야 할지도 몰랐습니다.</p>
 <!-- part4-monetize/part4-practice.md -->
 <section class="chapter">
 <h1 id="part-4-마무리-수익화-계획-세우기">Part 4 마무리: 수익화 계획 세우기</h1>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/part4-practice.png" alt="실습 이미지" />
 <hr>
 <h2 id="part-4-핵심-요약">Part 4 핵심 요약</h2>
 <p>네 개의 챕터를 통해 이런 것들을 배웠습니다.</p>
@@ -4594,7 +4446,6 @@ Part 5에서는 <strong>오래 지속할 수 있는 사업</strong>을 만들어
 <!-- part5-sustain/chapter15.md -->
 <section class="chapter">
 <h1 id="chapter-15-자동화로-시간-벌기">Chapter 15. 자동화로 시간 벌기</h1>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/chapter15.png" alt="챕터15 이미지" />
 <hr>
 <h2 id="학습-목표">학습 목표</h2>
 <p>이 챕터를 읽고 나면 이런 것들을 알게 됩니다.</p>
@@ -4605,7 +4456,6 @@ Part 5에서는 <strong>오래 지속할 수 있는 사업</strong>을 만들어
 </ol>
 <hr>
 <h2 id="1-반복-작업-자동화하기">1. 반복 작업 자동화하기</h2>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch15-manual-auto.png" alt="수동 작업에 지친 모습 vs 자동화로 여유로운 모습" />
 <h3>매일 같은 일을 반복하고 계신가요?</h3>
 <p>서비스를 운영하다 보면 같은 일이 반복됩니다.</p>
 <ul>
@@ -4655,7 +4505,6 @@ Part 5에서는 <strong>오래 지속할 수 있는 사업</strong>을 만들어
 </blockquote>
 <p>전체 문의의 80%가 같은 질문입니다.<br>
 이걸 매번 직접 답하면 시간 낭비입니다.</p>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch15-chatbot.png" alt="AI 챗봇이 80%의 문의를 자동 처리하는 플로우" />
 <h3>AI 챗봇을 세워 두세요</h3>
 <p>AI 챗봇이 대신 답변해 줍니다.</p>
 <p>AI에게 이렇게 설정하면 됩니다.</p>
@@ -4801,7 +4650,6 @@ Part 5에서는 <strong>오래 지속할 수 있는 사업</strong>을 만들어
 <!-- part5-sustain/chapter16.md -->
 <section class="chapter">
 <h1 id="chapter-16-나만의-커뮤니티-만들기">Chapter 16. 나만의 커뮤니티 만들기</h1>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/chapter16.png" alt="챕터16 이미지" />
 <hr>
 <h2 id="학습-목표">학습 목표</h2>
 <p>이 챕터를 읽고 나면 이런 것들을 알게 됩니다.</p>
@@ -4812,7 +4660,6 @@ Part 5에서는 <strong>오래 지속할 수 있는 사업</strong>을 만들어
 </ol>
 <hr>
 <h2 id="1-사용자-커뮤니티의-힘">1. 사용자 커뮤니티의 힘</h2>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch16-loyalty.png" alt="낯선 사람에서 충성 팬까지 — 고객 충성도 5단계" />
 <h3>충성 고객은 어디서 올까요?</h3>
 <p>광고로 온 고객은 쉽게 떠납니다.<br>
 더 싼 곳이 나타나면 바로 옮겨갑니다.</p>
@@ -4841,7 +4688,6 @@ Part 5에서는 <strong>오래 지속할 수 있는 사업</strong>을 만들어
 <p><strong>커뮤니티는 자동 고객 센터입니다.</strong></p>
 <hr>
 <h2 id="2-커뮤니티-시작하기">2. 커뮤니티 시작하기</h2>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/ch16-growth.png" alt="5명에서 100명까지 — 커뮤니티 성장 타임라인" />
 <h3>어디서 시작할까요?</h3>
 <p>거창한 플랫폼이 필요 없습니다.<br>
 익숙한 곳에서 시작하세요.</p>
@@ -5008,7 +4854,6 @@ Pieter Levels가 일일이 관리하지 않습니다.<br>
 <!-- part5-sustain/chapter17.md -->
 <section class="chapter">
 <h1 id="chapter-17-1인-사업가의-장기-비전">Chapter 17. 1인 사업가의 장기 비전</h1>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/chapter17.png" alt="챕터17 이미지" />
 <hr>
 <h2 id="학습-목표">학습 목표</h2>
 <p>이 챕터를 읽고 나면 이런 것들을 알게 됩니다.</p>
@@ -5251,7 +5096,6 @@ AI 영상 제작, AI 음악, AI 교육.<br>
 <!-- part5-sustain/part5-practice.md -->
 <section class="chapter">
 <h1 id="part-5-마무리-지속-가능한-1인-사업-로드맵">Part 5 마무리: 지속 가능한 1인 사업 로드맵</h1>
-<img src="file:///C:/Users/bsuha/Claude-APP/vibe-coding-ebook/images/chapters/part5-practice.png" alt="실습 이미지" />
 <hr>
 <h2 id="part-5-핵심-요약">Part 5 핵심 요약</h2>
 <p>세 개의 챕터를 통해 이런 것들을 배웠습니다.</p>
