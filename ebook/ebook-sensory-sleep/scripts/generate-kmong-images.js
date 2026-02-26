@@ -2,8 +2,12 @@ const { GoogleGenAI } = require("@google/genai");
 const fs = require("fs");
 const path = require("path");
 
-// API 설정 — 사용자 제공 키
-const GEMINI_API_KEY = "***REMOVED***";
+// API 설정 — 환경변수에서 키 로드
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+if (!GEMINI_API_KEY) {
+  console.error("Error: GEMINI_API_KEY environment variable is not set.");
+  process.exit(1);
+}
 const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
 const OUTPUT_DIR = path.join(__dirname, "..", "images", "kmong-listing");

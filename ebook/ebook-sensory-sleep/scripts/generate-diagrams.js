@@ -2,7 +2,11 @@ const { GoogleGenAI } = require("@google/genai");
 const fs = require("fs");
 const path = require("path");
 
-const GEMINI_API_KEY = "***REMOVED***";
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+if (!GEMINI_API_KEY) {
+  console.error("Error: GEMINI_API_KEY environment variable is not set.");
+  process.exit(1);
+}
 const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
 const STYLE =

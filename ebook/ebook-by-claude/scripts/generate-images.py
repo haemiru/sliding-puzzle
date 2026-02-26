@@ -19,7 +19,10 @@ from google import genai
 from google.genai import types
 
 # ─── 설정 ────────────────────────────────────────────────
-API_KEY = os.environ.get("GEMINI_API_KEY", "***REMOVED***")
+API_KEY = os.environ.get("GEMINI_API_KEY")
+if not API_KEY:
+    print("Error: GEMINI_API_KEY environment variable is not set.")
+    sys.exit(1)
 MODEL = "gemini-2.0-flash-exp-image-generation"
 DELAY_SECONDS = 3
 MAX_RETRIES = 3

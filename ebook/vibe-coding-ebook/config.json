@@ -17,7 +17,7 @@
     "accent": "#E74C3C"
   },
   "gemini": {
-    "apiKey": "***REMOVED***",
+    "apiKey": "",
     "model": "gemini-3-pro-image-preview"
   }
 }
