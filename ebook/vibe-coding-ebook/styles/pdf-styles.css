@@ -1,0 +1,71 @@
+/* ============================================================
+ * pdf-styles.css
+ * Puppeteer PDF 생성 시 추가 적용되는 인쇄 전용 스타일
+ *
+ * ebook.css 위에 오버라이드로 적용됩니다.
+ * 화면(screen)에서는 무시되고 PDF/인쇄에서만 반영됩니다.
+ * ============================================================ */
+
+/* ── 인쇄 전용 ── */
+@media print {
+
+  /* 표지: 목차 뒤에 자연스럽게 이어짐 */
+
+  /* 목차: 헤더 숨김 */
+  .toc {
+    page: toc;
+  }
+  @page toc {
+    @top-center { content: none; }
+  }
+
+  /* 본문 페이지 번호 */
+  @page {
+    @bottom-center {
+      content: counter(page);
+      font-family: 'Nanum Gothic', sans-serif;
+      font-size: 9pt;
+      color: #888888;
+    }
+  }
+
+  /* 파트 구분 페이지: 독립 페이지 */
+  .part-divider {
+    page: part;
+  }
+  @page part {
+    @top-center { content: none; }
+    @bottom-center { content: none; }
+  }
+
+  /* 이미지 페이지 넘침 방지 */
+  img {
+    max-height: 80vh;
+    object-fit: contain;
+  }
+
+  /* 코드 블록 글자 크기 축소 (인쇄 시 잘림 방지) */
+  pre {
+    font-size: 9pt;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+
+  /* 링크 밑줄 제거 */
+  a {
+    text-decoration: none;
+  }
+
+  /* 테이블 헤더 반복 (긴 테이블) */
+  thead {
+    display: table-header-group;
+  }
+
+  /* 챕터마다 새 페이지에서 시작 */
+  .chapter {
+    page-break-before: always;
+  }
+  .chapter:first-of-type {
+    page-break-before: avoid;
+  }
+}

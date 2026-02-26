@@ -1,0 +1,663 @@
+/* ═══════════════════════════════════════════════
+   괜찮아, 엄마도 아프니까
+   전자책 PDF 변환용 CSS
+   ═══════════════════════════════════════════════ */
+
+/* ───────────────────────────────────────────────
+   0. 커스텀 프로퍼티
+   ─────────────────────────────────────────────── */
+:root {
+  --c-main: #F4A7A3;
+  --c-sub1: #C5B9E8;
+  --c-sub2: #A8D8C8;
+  --c-bg: #FFF8F0;
+  --c-text: #3D3D3D;
+  --c-accent: #F5C542;
+  --c-summary-bg: #F5EDE3;
+
+  --c-main-light: #FFF0EF;
+  --c-sub1-light: #F0ECF8;
+  --c-sub2-light: #EEF8F4;
+  --c-accent-light: #FFF8E1;
+
+  --font-main: 'Pretendard', 'Noto Sans KR', sans-serif;
+  --line-height: 1.8;
+  --radius: 8px;
+  --radius-lg: 12px;
+}
+
+/* ───────────────────────────────────────────────
+   1. 페이지 설정
+   ─────────────────────────────────────────────── */
+@page {
+  size: A4;
+  margin: 25mm 20mm 25mm 20mm;
+}
+
+@page :first {
+  margin: 0;
+}
+
+@page :blank {
+}
+
+/* ───────────────────────────────────────────────
+   1-b. Pandoc 타이틀 블록 & TOC
+   ─────────────────────────────────────────────── */
+
+/* 타이틀 블록 — 첫 페이지 표지 */
+#title-block-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 85vh;
+  padding: 60px 40px;
+  background: linear-gradient(180deg, var(--c-bg) 0%, #fff 100%);
+}
+
+#title-block-header .title {
+  font-size: 36pt;
+  font-weight: 800;
+  color: var(--c-main);
+  margin: 0 0 20px 0;
+  page-break-before: avoid;
+}
+
+#title-block-header .author {
+  font-size: 14pt;
+  font-weight: 600;
+  color: #888;
+  margin: 0;
+}
+
+/* ─── 목차 (TOC) ─── */
+nav#TOC {
+  page-break-before: always;
+  padding: 60px 20px 40px;
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+nav#TOC::before {
+  content: "Contents";
+  display: block;
+  text-align: center;
+  font-size: 11pt;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--c-main);
+  margin-bottom: 8px;
+}
+
+nav#TOC::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 3px;
+  background: var(--c-main);
+  margin: 0 auto 36px;
+  border-radius: 2px;
+}
+
+nav#TOC ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* 최상위 항목 (H1: Part, 프롤로그, 에필로그, 부록) */
+nav#TOC > ul > li {
+  margin-bottom: 22px;
+}
+
+nav#TOC > ul > li > a {
+  font-size: 12pt;
+  font-weight: 700;
+  color: var(--c-main);
+  text-decoration: none;
+  display: block;
+  padding: 6px 0 8px;
+  border-bottom: 1.5px solid rgba(244, 167, 163, 0.25);
+  letter-spacing: -0.01em;
+}
+
+/* 하위 항목 (H2: Chapter, 부록 A~D) */
+nav#TOC > ul > li > ul {
+  margin-top: 8px;
+  padding-left: 18px;
+  border-left: 2px solid rgba(244, 167, 163, 0.15);
+}
+
+nav#TOC > ul > li > ul > li {
+  margin-bottom: 5px;
+}
+
+nav#TOC > ul > li > ul > li > a {
+  font-size: 10.5pt;
+  font-weight: 400;
+  color: var(--c-text);
+  text-decoration: none;
+  display: block;
+  padding: 3px 0;
+  line-height: 1.5;
+}
+
+nav#TOC a:hover {
+  color: var(--c-main);
+}
+
+/* ───────────────────────────────────────────────
+   2. 기본 리셋 & body
+   ─────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  font-size: 11pt;
+  line-height: var(--line-height);
+  color: var(--c-text);
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ───────────────────────────────────────────────
+   3. 타이포그래피
+   ─────────────────────────────────────────────── */
+
+/* Part 제목 (H1) */
+h1 {
+  font-size: 28pt;
+  font-weight: 800;
+  color: var(--c-main);
+  margin-top: 60px;
+  margin-bottom: 12px;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  page-break-before: always;
+}
+
+h1:first-of-type {
+  page-break-before: avoid;
+}
+
+/* Chapter 제목 (H2) */
+h2 {
+  font-size: 22pt;
+  font-weight: 700;
+  color: var(--c-text);
+  margin-top: 48px;
+  margin-bottom: 10px;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  page-break-before: always;
+}
+
+/* 소제목 (H3) */
+h3 {
+  font-size: 16pt;
+  font-weight: 600;
+  color: var(--c-sub1);
+  margin-top: 32px;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+/* H4 — 항목 제목 */
+h4 {
+  font-size: 13pt;
+  font-weight: 600;
+  color: var(--c-text);
+  margin-top: 24px;
+  margin-bottom: 6px;
+  line-height: 1.45;
+}
+
+/* 본문 */
+p {
+  font-size: 11pt;
+  margin-bottom: 10px;
+  line-height: var(--line-height);
+  text-align: justify;
+  word-break: keep-all;
+  orphans: 3;
+  widows: 3;
+}
+
+/* 핵심 메시지 (이탤릭) */
+h2 + p > em:only-child {
+  display: block;
+  font-size: 11pt;
+  color: var(--c-main);
+  font-style: italic;
+  margin-bottom: 16px;
+}
+
+/* 강조 텍스트 */
+strong {
+  font-weight: 700;
+  color: var(--c-text);
+}
+
+em {
+  font-style: italic;
+}
+
+/* ───────────────────────────────────────────────
+   4. 링크
+   ─────────────────────────────────────────────── */
+a {
+  color: var(--c-main);
+  text-decoration: underline;
+  text-decoration-color: rgba(244, 167, 163, 0.4);
+  text-underline-offset: 2px;
+}
+
+/* ───────────────────────────────────────────────
+   5. 수평선
+   ─────────────────────────────────────────────── */
+hr {
+  border: none;
+  border-top: 2px dashed rgba(244, 167, 163, 0.35);
+  margin: 28px 0;
+}
+
+/* ───────────────────────────────────────────────
+   6. 이미지
+   ─────────────────────────────────────────────── */
+img {
+  display: block;
+  max-width: 80%;
+  margin: 24px auto;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+figcaption {
+  text-align: center;
+  font-size: 9pt;
+  color: #999;
+  margin-top: -16px;
+  margin-bottom: 24px;
+}
+
+/* ───────────────────────────────────────────────
+   7. 블록쿼트 — 공통 기반
+   ─────────────────────────────────────────────── */
+blockquote {
+  margin: 20px 0;
+  padding: 18px 22px;
+  border-radius: var(--radius);
+  font-size: 10.5pt;
+  line-height: 1.75;
+  page-break-inside: avoid;
+}
+
+blockquote p {
+  margin-bottom: 8px;
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* ─── 💬 공감 에피소드 ─── */
+blockquote:has(> p:first-child > strong:first-child) {
+  /* 기본 스타일: 모든 블록쿼트에 적용 */
+}
+
+/* 공감 에피소드: 💬 로 시작 */
+blockquote > p:first-child > strong:first-child[class*="episode"],
+blockquote:has(strong:first-child) {
+  /* fallback — CSS 기반 이모지 선택자 미지원 시 클래스 대체 가능 */
+}
+
+/* 콘텐츠 기반으로 블록쿼트 구분이 어려우므로
+   마크다운 변환기에서 class를 부여하는 것이 이상적.
+   아래는 범용 시각 스타일을 제공합니다. */
+
+/* 기본 블록쿼트 — 공감 에피소드 스타일 (가장 빈번) */
+blockquote {
+  background: var(--c-main-light);
+  border-left: 4px solid var(--c-main);
+}
+
+blockquote em {
+  font-style: italic;
+  color: #555;
+}
+
+/* ─── 클래스 기반 블록쿼트 변형 ─── */
+/* 마크다운 → HTML 변환 시 클래스 부여를 권장합니다.
+   예: <blockquote class="bq-check"> */
+
+/* 🎯 셀프 체크 */
+blockquote.bq-check {
+  background: var(--c-sub1-light);
+  border-left: 4px solid var(--c-sub1);
+}
+
+/* 📋 워크시트 */
+blockquote.bq-worksheet {
+  background: var(--c-sub2-light);
+  border-left: none;
+  border: 2px dashed var(--c-sub2);
+}
+
+/* 💡 알아두세요 (팁) */
+blockquote.bq-tip {
+  background: var(--c-accent-light);
+  border-left: 4px solid var(--c-accent);
+}
+
+/* 📝 핵심 포인트 */
+blockquote.bq-keypoint {
+  background: var(--c-summary-bg);
+  border-left: 4px solid var(--c-main);
+  border-radius: var(--radius-lg);
+}
+
+blockquote.bq-keypoint strong {
+  color: var(--c-main);
+}
+
+/* 🔑 핵심 정리 */
+blockquote.bq-summary {
+  background: linear-gradient(135deg, rgba(244,167,163,0.10), rgba(197,185,232,0.10));
+  border-left: none;
+  border: 1px solid rgba(244, 167, 163, 0.25);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05);
+  padding: 24px 28px;
+}
+
+/* 🚦 번아웃 신호등 */
+blockquote.bq-signal {
+  background: #FAFAFA;
+  border-left: 4px solid var(--c-sub2);
+  border-radius: var(--radius-lg);
+}
+
+/* ───────────────────────────────────────────────
+   8. 리스트
+   ─────────────────────────────────────────────── */
+ul, ol {
+  margin: 8px 0 12px 20px;
+  font-size: 11pt;
+  line-height: var(--line-height);
+}
+
+li {
+  margin-bottom: 4px;
+}
+
+li > ul, li > ol {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+/* ───────────────────────────────────────────────
+   9. 체크박스 ([ ] / [x])
+   ─────────────────────────────────────────────── */
+ul li {
+  list-style: disc;
+}
+
+/* 체크박스 리스트는 마커 없이 */
+li:has(> input[type="checkbox"]) {
+  list-style: none;
+  margin-left: -20px;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--c-main);
+  border-radius: 3px;
+  vertical-align: middle;
+  margin-right: 6px;
+  position: relative;
+}
+
+input[type="checkbox"]:checked {
+  background: var(--c-main);
+}
+
+input[type="checkbox"]:checked::after {
+  content: "✓";
+  position: absolute;
+  top: -2px;
+  left: 1px;
+  font-size: 12px;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* ───────────────────────────────────────────────
+   10. 표 (table)
+   ─────────────────────────────────────────────── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0 20px;
+  font-size: 10pt;
+  line-height: 1.6;
+  page-break-inside: avoid;
+}
+
+thead {
+  background: var(--c-main);
+  color: #fff;
+}
+
+th {
+  padding: 10px 14px;
+  font-weight: 600;
+  text-align: left;
+}
+
+td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #E8E8E8;
+}
+
+tbody tr:nth-child(even) {
+  background: var(--c-bg);
+}
+
+tbody tr:hover {
+  background: var(--c-main-light);
+}
+
+/* ───────────────────────────────────────────────
+   11. 표지 페이지
+   ─────────────────────────────────────────────── */
+.cover-page {
+  page: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--c-bg) 0%, #fff 100%);
+  text-align: center;
+  padding: 40px;
+}
+
+.cover-page h1 {
+  font-size: 36pt;
+  font-weight: 800;
+  color: var(--c-main);
+  margin-bottom: 12px;
+  page-break-before: avoid;
+}
+
+.cover-page h3 {
+  font-size: 14pt;
+  font-weight: 400;
+  color: #888;
+  margin-bottom: 40px;
+}
+
+.cover-page .author {
+  font-size: 13pt;
+  font-weight: 600;
+  color: var(--c-text);
+  margin-top: 24px;
+}
+
+/* ───────────────────────────────────────────────
+   12. 목차 (TOC)
+   ─────────────────────────────────────────────── */
+.toc h2 {
+  font-size: 22pt;
+  text-align: center;
+  margin-bottom: 24px;
+  page-break-before: avoid;
+}
+
+.toc ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.toc li {
+  padding: 6px 0;
+  border-bottom: 1px dotted #DDD;
+  font-size: 11pt;
+}
+
+.toc li strong {
+  color: var(--c-main);
+}
+
+.toc a {
+  text-decoration: none;
+  color: var(--c-text);
+}
+
+/* ───────────────────────────────────────────────
+   13. 판권 (Colophon)
+   ─────────────────────────────────────────────── */
+.colophon {
+  page-break-before: always;
+  font-size: 9pt;
+  color: #888;
+  line-height: 1.7;
+  padding-top: 60%;
+}
+
+.colophon h2 {
+  font-size: 14pt;
+  color: var(--c-text);
+  margin-bottom: 16px;
+  page-break-before: avoid;
+}
+
+.colophon hr {
+  border-top: 1px solid #DDD;
+  margin: 14px 0;
+}
+
+/* ───────────────────────────────────────────────
+   14. 부록
+   ─────────────────────────────────────────────── */
+.appendix h2 {
+  color: var(--c-sub1);
+}
+
+.appendix h3 {
+  color: var(--c-sub2);
+}
+
+/* ───────────────────────────────────────────────
+   15. 워크시트 빈칸
+   ─────────────────────────────────────────────── */
+/* 마크다운의 _____ 패턴 */
+blockquote p {
+  /* 빈칸(밑줄)은 마크다운에서 \_\_\_ 로 표현 */
+}
+
+/* ───────────────────────────────────────────────
+   16. 페이지 분할 제어
+   ─────────────────────────────────────────────── */
+h1, h2 {
+  page-break-after: avoid;
+}
+
+h3, h4 {
+  page-break-after: avoid;
+}
+
+blockquote, table, figure, img {
+  page-break-inside: avoid;
+}
+
+/* ───────────────────────────────────────────────
+   17. 각주 / 참고문헌
+   ─────────────────────────────────────────────── */
+.references p {
+  font-size: 9pt;
+  line-height: 1.6;
+  margin-bottom: 8px;
+  text-indent: -24px;
+  padding-left: 24px;
+  text-align: left;
+}
+
+/* ───────────────────────────────────────────────
+   18. 유틸리티 클래스
+   ─────────────────────────────────────────────── */
+.text-center { text-align: center; }
+.text-main { color: var(--c-main); }
+.text-sub1 { color: var(--c-sub1); }
+.text-sub2 { color: var(--c-sub2); }
+.text-accent { color: var(--c-accent); }
+.text-small { font-size: 9pt; }
+.mt-0 { margin-top: 0; }
+.mb-0 { margin-bottom: 0; }
+.no-break { page-break-inside: avoid; }
+
+/* ───────────────────────────────────────────────
+   19. @media print
+   ─────────────────────────────────────────────── */
+@media print {
+  body {
+    background: #fff;
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--c-text);
+  }
+
+  /* URL 표시 (선택사항) */
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 8pt;
+    color: #999;
+    word-break: break-all;
+  }
+
+  /* 내부 링크는 URL 숨김 */
+  a[href^="#"]::after {
+    content: none;
+  }
+
+  img {
+    box-shadow: none;
+  }
+
+  .no-print {
+    display: none;
+  }
+}

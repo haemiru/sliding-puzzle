@@ -1,0 +1,688 @@
+/* ============================================================
+   Claude로 전자책 작성하기 — 전자책 스타일시트
+   Design System: Amber (#D97706) + Deep Blue (#1E3A5F)
+   ============================================================ */
+
+/* ─── 폰트 ─────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+@font-face {
+  font-family: 'D2Coding';
+  src: local('D2Coding'), local('D2 Coding');
+  font-display: swap;
+}
+
+/* ─── 페이지 설정 ──────────────────────────────────────── */
+@page {
+  size: A4;
+  margin: 25mm 22mm 25mm 22mm;
+}
+
+/* 홀수(우측) 페이지 — 챕터명 표시 */
+@page :right {
+  margin-left: 27mm; /* 22mm + gutter 5mm */
+
+  @top-right {
+    content: string(chapter-title);
+    font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+    font-size: 8pt;
+    color: #94A3B8;
+    letter-spacing: 0.5px;
+  }
+}
+
+/* 짝수(좌측) 페이지 — 책 제목 표시 */
+@page :left {
+  margin-right: 27mm; /* 22mm + gutter 5mm */
+
+  @top-left {
+    content: "Claude로 전자책 작성하기";
+    font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+    font-size: 8pt;
+    color: #94A3B8;
+    letter-spacing: 0.5px;
+  }
+}
+
+/* 챕터 첫 페이지 — 헤더/푸터 숨김 */
+@page chapter-start {
+  @top-left { content: none; }
+  @top-right { content: none; }
+  @bottom-center { content: none; }
+}
+
+/* 표지 페이지 */
+@page cover {
+  margin: 0;
+  @top-left { content: none; }
+  @top-right { content: none; }
+  @bottom-center { content: none; }
+}
+
+/* ─── 기본 리셋 & 본문 ────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 11pt;
+}
+
+body {
+  font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+  font-size: 11pt;
+  line-height: 1.7;
+  color: #1E293B;
+  background: #FFF8F0;
+  letter-spacing: -0.2px;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── 표지 ─────────────────────────────────────────────── */
+.cover-page {
+  page: cover;
+  page-break-after: always;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(160deg, #1E3A5F 0%, #0F2440 60%, #D97706 100%);
+  color: #FFFFFF;
+  text-align: center;
+  padding: 40mm 30mm;
+}
+
+.cover-page h1 {
+  font-size: 36pt;
+  font-weight: 900;
+  line-height: 1.3;
+  letter-spacing: -1px;
+  margin-bottom: 12mm;
+  color: #FFFFFF;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+.cover-page .subtitle {
+  font-size: 14pt;
+  font-weight: 300;
+  color: #FCD34D;
+  margin-bottom: 20mm;
+  letter-spacing: 1px;
+}
+
+.cover-page .author {
+  font-size: 12pt;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  padding-top: 8mm;
+}
+
+.cover-page .cover-image {
+  width: 60%;
+  max-width: 300px;
+  margin-bottom: 15mm;
+  border-radius: 8px;
+}
+
+/* 저작권 페이지 */
+.copyright-page {
+  page-break-after: always;
+  padding-top: 60mm;
+  font-size: 9pt;
+  line-height: 1.8;
+  color: #64748B;
+}
+
+.copyright-page p {
+  margin-bottom: 3mm;
+}
+
+/* 목차 페이지 */
+.toc-page {
+  page-break-after: always;
+}
+
+.toc-page h2 {
+  font-size: 22pt;
+  color: #1E3A5F;
+  margin-bottom: 10mm;
+  border: none;
+  padding: 0;
+}
+
+.toc-page ul {
+  list-style: none;
+  padding: 0;
+}
+
+.toc-page li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 3mm 0;
+  border-bottom: 1px dotted #CBD5E1;
+  font-size: 11pt;
+}
+
+.toc-page li.toc-chapter {
+  font-weight: 700;
+  color: #1E3A5F;
+  font-size: 12pt;
+  padding-top: 5mm;
+}
+
+.toc-page li .toc-page-num {
+  color: #D97706;
+  font-weight: 600;
+  flex-shrink: 0;
+  margin-left: 5mm;
+}
+
+/* ─── 챕터 ─────────────────────────────────────────────── */
+.chapter {
+  page: auto;
+  page-break-before: right; /* 항상 홀수(우측) 페이지에서 시작 */
+}
+
+/* 챕터 헤더 */
+.chapter-header {
+  page: chapter-start;
+  background: #1E3A5F;
+  color: #FFFFFF;
+  margin: -25mm -22mm 10mm -22mm; /* 여백을 덮는 풀블리드 */
+  padding: 30mm 27mm 20mm 35mm;
+  position: relative;
+  overflow: hidden;
+}
+
+.chapter-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #D97706, #FCD34D, #D97706);
+}
+
+.chapter-header .chapter-number {
+  font-size: 13pt;
+  font-weight: 500;
+  color: #FCD34D;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 4mm;
+  display: block;
+}
+
+.chapter-header h1 {
+  string-set: chapter-title content();
+  font-size: 28pt;
+  font-weight: 900;
+  line-height: 1.3;
+  letter-spacing: -0.5px;
+  color: #FFFFFF;
+  margin: 0;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+.chapter-header .chapter-desc {
+  font-size: 11pt;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.75);
+  margin-top: 5mm;
+  line-height: 1.5;
+}
+
+/* 챕터 헤더 이미지 (배너) */
+.chapter-header-image {
+  width: 100%;
+  margin: 0 0 8mm 0;
+  border-radius: 6px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* ─── 제목 계층 ────────────────────────────────────────── */
+h1 {
+  font-size: 28pt;
+  font-weight: 900;
+  line-height: 1.3;
+  letter-spacing: -0.5px;
+  color: #1E3A5F;
+  margin: 15mm 0 8mm 0;
+  padding-bottom: 4mm;
+  border-bottom: 3px solid #D97706;
+}
+
+h2 {
+  font-size: 18pt;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.3px;
+  color: #1E3A5F;
+  margin: 12mm 0 5mm 0;
+  padding-left: 4mm;
+  border-left: 4px solid #D97706;
+}
+
+h3 {
+  font-size: 14pt;
+  font-weight: 700;
+  color: #334155;
+  margin: 8mm 0 4mm 0;
+  line-height: 1.4;
+}
+
+h4 {
+  font-size: 12pt;
+  font-weight: 600;
+  color: #475569;
+  margin: 6mm 0 3mm 0;
+}
+
+/* ─── 본문 요소 ────────────────────────────────────────── */
+p {
+  margin-bottom: 4mm;
+  text-align: justify;
+  orphans: 3;
+  widows: 3;
+}
+
+strong {
+  font-weight: 700;
+  color: #1E3A5F;
+}
+
+em {
+  font-style: italic;
+  color: #D97706;
+}
+
+a {
+  color: #D97706;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(217, 119, 6, 0.3);
+}
+
+/* 리스트 */
+ul, ol {
+  margin: 3mm 0 5mm 6mm;
+  padding-left: 4mm;
+}
+
+li {
+  margin-bottom: 2mm;
+  line-height: 1.6;
+}
+
+li::marker {
+  color: #D97706;
+  font-weight: 600;
+}
+
+ul li::marker {
+  content: '▸ ';
+  color: #D97706;
+}
+
+/* 인용문 */
+blockquote {
+  margin: 5mm 0;
+  padding: 5mm 6mm 5mm 5mm;
+  border-left: 4px solid #D97706;
+  background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+  border-radius: 0 6px 6px 0;
+  font-style: italic;
+  color: #92400E;
+  font-size: 10.5pt;
+  line-height: 1.6;
+}
+
+blockquote p {
+  margin-bottom: 2mm;
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* 구분선 */
+hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #CBD5E1, transparent);
+  margin: 8mm 0;
+}
+
+/* ─── 코드 & 프롬프트 ────────────────────────────────── */
+code {
+  font-family: 'D2Coding', 'Source Code Pro', 'Fira Code', monospace;
+  font-size: 9.5pt;
+  background: #F1F5F9;
+  color: #D97706;
+  padding: 0.5mm 2mm;
+  border-radius: 3px;
+  border: 1px solid #E2E8F0;
+}
+
+pre {
+  margin: 5mm 0;
+  padding: 5mm;
+  background: #1E293B;
+  border-radius: 6px;
+  overflow-x: auto;
+  border: 1px solid #334155;
+}
+
+pre code {
+  font-size: 9.5pt;
+  line-height: 1.5;
+  color: #E2E8F0;
+  background: none;
+  border: none;
+  padding: 0;
+  display: block;
+  white-space: pre-wrap;
+}
+
+/* ─── 커스텀 박스 ──────────────────────────────────────── */
+
+/* 프롬프트 박스 */
+.box-prompt {
+  margin: 5mm 0;
+  padding: 5mm 5mm 5mm 6mm;
+  background: #FEF3C7;
+  border-left: 4px solid #D97706;
+  border-radius: 0 6px 6px 0;
+  position: relative;
+  page-break-inside: avoid;
+}
+
+.box-prompt::before {
+  content: '🔷 프롬프트';
+  display: block;
+  font-size: 9pt;
+  font-weight: 700;
+  color: #D97706;
+  letter-spacing: 0.5px;
+  margin-bottom: 3mm;
+  text-transform: uppercase;
+}
+
+.box-prompt code,
+.box-prompt pre {
+  font-family: 'D2Coding', 'Source Code Pro', monospace;
+  font-size: 10pt;
+  line-height: 1.5;
+}
+
+.box-prompt pre {
+  background: rgba(217, 119, 6, 0.08);
+  border: 1px dashed #D97706;
+  margin: 3mm 0 0 0;
+}
+
+.box-prompt pre code {
+  color: #92400E;
+}
+
+/* 워크시트 박스 */
+.box-worksheet {
+  margin: 5mm 0;
+  padding: 5mm 5mm 5mm 6mm;
+  background: #F0F9FF;
+  border: 2px dashed #93C5FD;
+  border-radius: 6px;
+  position: relative;
+  page-break-inside: avoid;
+}
+
+.box-worksheet::before {
+  content: '✏️ 워크시트';
+  display: block;
+  font-size: 9pt;
+  font-weight: 700;
+  color: #1E3A5F;
+  letter-spacing: 0.5px;
+  margin-bottom: 3mm;
+}
+
+.box-worksheet .write-line {
+  border-bottom: 1px solid #BFDBFE;
+  padding: 3mm 0;
+  min-height: 10mm;
+}
+
+/* 꿀팁 박스 */
+.box-tip {
+  margin: 5mm 0;
+  padding: 5mm 5mm 5mm 6mm;
+  background: #ECFDF5;
+  border-left: 4px solid #10B981;
+  border-radius: 0 6px 6px 0;
+  position: relative;
+  page-break-inside: avoid;
+}
+
+.box-tip::before {
+  content: '💡 꿀팁';
+  display: block;
+  font-size: 9pt;
+  font-weight: 700;
+  color: #10B981;
+  letter-spacing: 0.5px;
+  margin-bottom: 3mm;
+}
+
+/* 주의 박스 */
+.box-warning {
+  margin: 5mm 0;
+  padding: 5mm 5mm 5mm 6mm;
+  background: #FEF2F2;
+  border-left: 4px solid #EF4444;
+  border-radius: 0 6px 6px 0;
+  position: relative;
+  page-break-inside: avoid;
+}
+
+.box-warning::before {
+  content: '⚠️ 주의';
+  display: block;
+  font-size: 9pt;
+  font-weight: 700;
+  color: #EF4444;
+  letter-spacing: 0.5px;
+  margin-bottom: 3mm;
+}
+
+/* 핵심 포인트 박스 */
+.box-key {
+  margin: 5mm 0;
+  padding: 5mm 5mm 5mm 6mm;
+  background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%);
+  border-left: 4px solid #6366F1;
+  border-radius: 0 6px 6px 0;
+  position: relative;
+  page-break-inside: avoid;
+}
+
+.box-key::before {
+  content: '🔑 핵심 포인트';
+  display: block;
+  font-size: 9pt;
+  font-weight: 700;
+  color: #6366F1;
+  letter-spacing: 0.5px;
+  margin-bottom: 3mm;
+}
+
+/* 실습 박스 */
+.box-practice {
+  margin: 5mm 0;
+  padding: 5mm;
+  background: #FFFBEB;
+  border: 2px solid #D97706;
+  border-radius: 6px;
+  position: relative;
+  page-break-inside: avoid;
+}
+
+.box-practice::before {
+  content: '🎯 실습';
+  display: block;
+  font-size: 9pt;
+  font-weight: 700;
+  color: #D97706;
+  letter-spacing: 0.5px;
+  margin-bottom: 3mm;
+}
+
+/* ─── 표(Table) ────────────────────────────────────────── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 5mm 0;
+  font-size: 10pt;
+  page-break-inside: avoid;
+}
+
+thead th {
+  background: #1E3A5F;
+  color: #FFFFFF;
+  font-weight: 600;
+  padding: 3mm 4mm;
+  text-align: left;
+  font-size: 9.5pt;
+  letter-spacing: 0.3px;
+}
+
+thead th:first-child {
+  border-radius: 4px 0 0 0;
+}
+
+thead th:last-child {
+  border-radius: 0 4px 0 0;
+}
+
+tbody td {
+  padding: 3mm 4mm;
+  border-bottom: 1px solid #E2E8F0;
+  vertical-align: top;
+  line-height: 1.5;
+}
+
+tbody tr:nth-child(even) {
+  background: #F8FAFC;
+}
+
+tbody tr:hover {
+  background: #F1F5F9;
+}
+
+/* ─── 이미지 ───────────────────────────────────────────── */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 5mm auto;
+}
+
+figure {
+  margin: 5mm 0;
+  text-align: center;
+  page-break-inside: avoid;
+}
+
+figcaption {
+  font-size: 9pt;
+  color: #64748B;
+  margin-top: 2mm;
+  font-style: italic;
+}
+
+/* ─── 페이지 나누기 유틸리티 ──────────────────────────── */
+.page-break {
+  page-break-after: always;
+}
+
+.page-break-before {
+  page-break-before: always;
+}
+
+.no-break {
+  page-break-inside: avoid;
+}
+
+/* ─── 마지막 페이지 (축하/마무리) ─────────────────────── */
+.closing-page {
+  page: cover;
+  page-break-before: always;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(160deg, #1E3A5F 0%, #0F2440 60%, #D97706 100%);
+  color: #FFFFFF;
+  text-align: center;
+  padding: 40mm 30mm;
+}
+
+.closing-page h1 {
+  font-size: 28pt;
+  font-weight: 900;
+  color: #FCD34D;
+  margin-bottom: 10mm;
+  border: none;
+  padding: 0;
+}
+
+.closing-page p {
+  font-size: 12pt;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.8;
+  text-align: center;
+}
+
+/* ─── 인쇄 최적화 ─────────────────────────────────────── */
+@media print {
+  body {
+    background: #FFFFFF;
+  }
+
+  a {
+    border-bottom: none;
+  }
+
+  .box-prompt,
+  .box-worksheet,
+  .box-tip,
+  .box-warning,
+  .box-key,
+  .box-practice {
+    break-inside: avoid;
+  }
+
+  h1, h2, h3, h4 {
+    break-after: avoid;
+  }
+
+  table {
+    break-inside: avoid;
+  }
+
+  img {
+    break-inside: avoid;
+  }
+}

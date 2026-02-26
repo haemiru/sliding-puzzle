@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run build:*)",
+      "Bash(node -e:*)",
+      "Bash(node scripts/generate-images.js:*)",
+      "Bash(node scripts/generate-diagrams.js:*)",
+      "Bash(pandoc:*)",
+      "Bash(winget install:*)",
+      "Bash(export PATH=\"$PATH:/c/Users/bsuha/AppData/Local/Programs/Pandoc\")",
+      "Bash(\"/c/Users/bsuha/AppData/Local/Programs/Pandoc/pandoc.exe\" --version)",
+      "Bash(PANDOC=\"C:/Users/bsuha/AppData/Local/Microsoft/WinGet/Packages/JohnMacFarlane.Pandoc_Microsoft.Winget.Source_8wekyb3d8bbwe/pandoc-3.9/pandoc.exe\")",
+      "Bash(\"$PANDOC\" manuscript/complete-ebook.md -o build/final-ebook.docx --from markdown --to docx --resource-path=manuscript:. --wrap=none)",
+      "Bash(\"$PANDOC\" build/temp-ebook.md -o build/final-ebook.docx --from markdown --to docx --resource-path=. --wrap=none)",
+      "WebSearch",
+      "WebFetch(domain:ai.google.dev)",
+      "Bash(npm install:*)",
+      "Bash(node scripts/build-pdf.js:*)",
+      "Bash(cd C:\\\\Users\\\\bsuha\\\\Claude-APP\\\\ebook\\\\ebook-sensory-sleep:*)",
+      "Bash(ffmpeg:*)",
+      "Bash(magick:*)"
+    ]
+  }
+}

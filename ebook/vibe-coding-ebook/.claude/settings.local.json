@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:ai.google.dev)",
+      "Bash(cd:*)",
+      "mcp__claude_ai_Canva__generate-design",
+      "Bash(head:*)",
+      "Bash(echo NOT_FOUND:*)",
+      "Bash(tail:*)",
+      "Bash(sed:*)",
+      "Bash(export:*)",
+      "Bash(\"/c/Users/bsuha/AppData/Local/CapCut/Apps/8.1.1.3417/ffmpeg.exe\":*)",
+      "Bash(grep ffmpeg version:*)",
+      "Bash(\"/c/Users/bsuha/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.0.1-full_build/bin/ffmpeg.exe\":*)",
+      "Bash(\"$FFMPEG\":*)"
+    ]
+  }
+}

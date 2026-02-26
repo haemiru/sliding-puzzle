@@ -6,7 +6,24 @@
       "Bash(npm init:*)",
       "Bash(npm install:*)",
       "Bash(node scripts/generate-images.js:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(ls:*)",
+      "Bash(node scripts/generate-diagrams.js:*)",
+      "Bash(node scripts/build-pdf.js:*)",
+      "Bash(while read f)",
+      "Bash(done)",
+      "Bash(__NEW_LINE_ce53258ca5ea4dfa__ echo \"\")",
+      "Bash(explorer.exe \"C:\\\\Users\\\\bsuha\\\\Claude-APP\\\\ebook-sensory-sleep\\\\build\")",
+      "Bash(cmd.exe /c start \"\" \"C:\\\\Users\\\\bsuha\\\\Claude-APP\\\\ebook-sensory-sleep\\\\build\")",
+      "WebSearch",
+      "WebFetch(domain:ai.google.dev)",
+      "Bash(tail:*)",
+      "Bash(cd \"C:/Users/bsuha/Claude-APP/ebook\" && python3 scripts/generate-images.py 2>&1)",
+      "Bash(cd:*)",
+      "Bash(chmod +x:*)",
+      "Bash(cd \"C:/Users/bsuha/Claude-APP/ebook\" && bash scripts/quality-check.sh 2>&1)",
+      "Bash(cd \"C:/Users/bsuha/Claude-APP/ebook\" && bash scripts/build-pdf.sh 2>&1)",
+      "Bash(cd \"C:/Users/bsuha/Claude-APP/ebook\" && PUPPETEER_EXECUTABLE_PATH=\"C:\\\\\\\\Program Files\\\\\\\\Google\\\\\\\\Chrome\\\\\\\\Application\\\\\\\\chrome.exe\" npx md-to-pdf book.md --stylesheet styles/ebook.css --pdf-options '{\"format\":\"A4\",\"margin\":{\"top\":\"25mm\",\"bottom\":\"25mm\",\"left\":\"20mm\",\"right\":\"20mm\"},\"printBackground\":true}' --highlight-style github-dark 2>&1)"
     ]
   }
 }

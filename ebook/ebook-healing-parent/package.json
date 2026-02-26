@@ -1,0 +1,17 @@
+{
+  "name": "ebook-healing-parent",
+  "version": "1.0.0",
+  "description": "전자책: 괜찮아, 엄마도 아프니까 — 발달지연 아동 부모를 위한 내면 치유 가이드 (피지오 아카데미)",
+  "author": "피지오 아카데미",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "images": "node scripts/generate-images.js",
+    "merge": "node scripts/merge-content.js",
+    "pdf": "bash scripts/build-pdf.sh",
+    "build": "bash scripts/build-all.sh"
+  },
+  "dependencies": {
+    "puppeteer": "^24.37.5"
+  }
+}

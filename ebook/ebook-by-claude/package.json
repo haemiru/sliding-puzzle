@@ -1,0 +1,21 @@
+{
+  "name": "ebook-by-claude",
+  "version": "1.0.0",
+  "description": "**저자**: J.M",
+  "main": "index.js",
+  "scripts": {
+    "build": "node scripts/build-pdf.js",
+    "build:preview": "node scripts/build-pdf.js --preview",
+    "build:html": "node scripts/build-pdf.js --html-only",
+    "build:pandoc": "python scripts/build-pdf.py",
+    "generate-images": "python scripts/generate-images.py"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "markdown-it": "^14.1.1",
+    "puppeteer": "^24.37.5"
+  }
+}

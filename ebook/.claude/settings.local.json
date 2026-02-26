@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd:*)",
+      "Bash(curl:*)",
+      "Bash(node:*)",
+      "Bash(echo:*)",
+      "Bash(pip install:*)",
+      "Bash(py:*)",
+      "Bash(tail:*)",
+      "Bash(pandoc:*)",
+      "Bash(head:*)",
+      "Bash(python3:*)",
+      "Bash(cd /c/Users/bsuha/Claude-APP/ebook-by-claude && python scripts/build-pdf.py --keep-temp 2>&1)",
+      "Bash(weasyprint:*)",
+      "Bash(echo === LINE COUNTS \\(CORRECTED\\) ===:*)",
+      "Bash(wc:*)"
+    ]
+  }
+}

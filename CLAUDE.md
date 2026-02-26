@@ -84,3 +84,49 @@ npm run dev                               # 이미지 생성 + PDF 빌드 한번
 - **이미지 참조**: `![설명](../../images/chapters/filename.png)`
 - **정보 박스**: `<div class="box-tip">`, `<div class="box-warning">`, `<div class="box-key">`, `<div class="box-practice">`
 - **페이지 설정**: A4, 여백 2.5cm (안쪽 3cm 양면 인쇄)
+
+## ebook-sensory-sleep — 후각·호흡 수면 훈련 전자책
+
+**"코로 숨쉬고 꿈꾸는 아이"** — 발달장애 아동을 위한 후각·호흡 기반 수면 훈련 프로그램 전자책.
+
+### 명령어
+
+`ebook-sensory-sleep/` 디렉토리에서 실행:
+
+```bash
+npm run generate-images            # Gemini API로 챕터 일러스트 생성 (기존 건너뜀)
+npm run generate-images:force      # 모든 일러스트 강제 재생성
+npm run generate-diagrams          # Gemini API로 다이어그램 생성
+npm run build                      # PDF 빌드 → build/final-ebook.pdf
+npm run dev                        # 이미지 + 다이어그램 + PDF 한번에
+```
+
+### 구조
+
+- `manuscript/` — 원고 Markdown 파일 (4개 파트, 12개 챕터 + 부록)
+  - `00-cover.md`, `01-toc.md` — 표지, 목차
+  - `part1-foundation/` — Ch1~3 (수면 문제, 후각-호흡 연결, 과학적 근거)
+  - `part2-program/` — Ch4~8 (준비, 1~4주차 프로그램)
+  - `part3-cases/` — Ch9~12 (민준/서연/지훈 사례, 전문가 조언)
+  - `part4-qa/` — FAQ 20문, 긴급 대처
+  - `appendix/` — 기록지, 향기 가이드, 참고자료, 네트워크
+  - `99-closing.md` — 마치며
+- `images/chapter-illustrations/` — 챕터 일러스트 (Gemini API 생성)
+- `images/diagrams/` — 다이어그램 (Gemini API 생성)
+- `styles/` — markdown-styles.css, pdf-config.json
+- `scripts/` — generate-images.js, generate-diagrams.js, build-pdf.js
+- `build/` — 생성된 PDF
+
+### 빌드 파이프라인
+
+1. `generate-images.js` — Gemini `gemini-2.0-flash-exp-image-generation` API로 챕터 일러스트 생성
+2. `generate-diagrams.js` — 같은 API로 다이어그램 생성
+3. `build-pdf.js` — markdown-it → HTML → Puppeteer로 A4 PDF 생성
+
+### 작성 규칙
+
+- **언어**: 한국어, 부모+전문가 대상
+- **폰트**: Noto Sans KR 11pt, 줄간격 1.5
+- **색상**: primary `#9B89B3`(라벤더), secondary `#A8E6CF`(민트), accent `#FF8B94`(코랄)
+- **박스**: 실습(💡), 주의(⚠️), 전문가 팁(📌), 핵심 포인트(✅)
+- **페이지 설정**: A4, 여백 2cm/1.5cm

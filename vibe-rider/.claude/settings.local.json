@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git ls-tree:*)"
+      "Bash(git ls-tree:*)",
+      "Bash(cd /c/Users/bsuha/Claude-APP/vibe-rider && npx vercel git connect haemiru/bikeriding --yes 2>&1)",
+      "Bash(cd /c/Users/bsuha/Claude-APP/vibe-rider && npx vercel git connect https://github.com/haemiru/bikeriding --yes 2>&1)"
     ]
   }
 }

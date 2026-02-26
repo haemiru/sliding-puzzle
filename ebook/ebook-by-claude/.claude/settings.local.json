@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd C:\\\\Users\\\\bsuha\\\\Claude-APP\\\\ebook\\\\ebook-by-claude:*)"
+    ]
+  }
+}

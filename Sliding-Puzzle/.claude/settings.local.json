@@ -11,7 +11,12 @@
       "Bash(cd \"C:/Users/bsuha/Claude-APP/Sliding-Puzzle\" && npm run build 2>&1)",
       "Bash(gh auth:*)",
       "Bash(gh repo:*)",
-      "Bash(cd:*)"
+      "Bash(cd:*)",
+      "Bash(tail:*)",
+      "Bash(git:*)",
+      "Bash(gh api:*)",
+      "Bash(which git-filter-repo:*)",
+      "Bash(head:*)"
     ]
   }
 }

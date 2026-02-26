@@ -1,0 +1,11 @@
+file '../images/kmong-cover.png'
+duration 4
+file '../images/kmong-detail-01.png'
+duration 4
+file '../images/kmong-detail-02.png'
+duration 4
+file '../images/kmong-detail-03.png'
+duration 4
+file '../images/kmong-detail-04.png'
+duration 4
+file '../images/kmong-detail-04.png'
